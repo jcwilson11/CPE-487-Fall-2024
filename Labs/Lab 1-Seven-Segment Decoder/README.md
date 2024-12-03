@@ -29,7 +29,6 @@
 
 ### Project 1 and 2 Results
 - [Watch Video 1](https://youtu.be/FjeI1ry-u2o)  
-- [Watch Video 2](https://youtu.be/FjeI1ry-u2o)
 
 ### Original Doc
-[View original Google Doc with screenshots](https://docs.google.com/document/d/your-doc-id)
+[View original Google Doc with screenshots](https://docs.google.com/document/d/15u6aP7bKSd4b3Bs8m51_CgoYatVP3ajUtaIMakQf3N4/edit?usp=sharing)
