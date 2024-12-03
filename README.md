@@ -1,6 +1,7 @@
 # CPE-487-Fall-2024
 
 This GitHub covers content taken from my Digital Systems Design (dsd). All original labs, their content, and sintructions, are taken from Professor Kevin Lu and Bernard Yett.
+
 GitHub: https://github.com/byett/dsd.git
 
 There are a total of three simulation assignmernts, six labs, and a final project. 
