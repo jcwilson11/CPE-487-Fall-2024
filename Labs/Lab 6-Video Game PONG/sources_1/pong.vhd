@@ -11,33 +11,25 @@ ENTITY pong IS
         VGA_blue : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
         VGA_hsync : OUT STD_LOGIC;
         VGA_vsync : OUT STD_LOGIC;
-        ADC_CS : OUT STD_LOGIC; -- ADC signals
-        ADC_SCLK : OUT STD_LOGIC;
-        ADC_SDATA1 : IN STD_LOGIC;
-        ADC_SDATA2 : IN STD_LOGIC;
-        btn0 : IN STD_LOGIC); -- button to initiate serve
+        btnl : IN STD_LOGIC;
+        btnr : IN STD_LOGIC;
+        btn0 : IN STD_LOGIC;
+        SEG7_anode : OUT STD_LOGIC_VECTOR (7 DOWNTO 0); -- anodes of four 7-seg displays
+        SEG7_seg : OUT STD_LOGIC_VECTOR (6 DOWNTO 0)
+    ); 
 END pong;
 
 ARCHITECTURE Behavioral OF pong IS
     SIGNAL pxl_clk : STD_LOGIC := '0'; -- 25 MHz clock to VGA sync module
-    -- internal signals to connect modules
-    SIGNAL S_red, S_green, S_blue : STD_LOGIC; --_VECTOR (3 DOWNTO 0);
+    SIGNAL S_red, S_green, S_blue : STD_LOGIC;
     SIGNAL S_vsync : STD_LOGIC;
     SIGNAL S_pixel_row, S_pixel_col : STD_LOGIC_VECTOR (10 DOWNTO 0);
-    SIGNAL batpos : STD_LOGIC_VECTOR (10 DOWNTO 0); -- 9 downto 0
-    SIGNAL serial_clk, sample_clk : STD_LOGIC;
-    SIGNAL adout : STD_LOGIC_VECTOR (11 DOWNTO 0);
-    SIGNAL count : STD_LOGIC_VECTOR (9 DOWNTO 0); -- counter to generate ADC clocks
-    COMPONENT adc_if IS
-        PORT (
-            SCK : IN STD_LOGIC;
-            SDATA1 : IN STD_LOGIC;
-            SDATA2 : IN STD_LOGIC;
-            CS : IN STD_LOGIC;
-            data_1 : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-            data_2 : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
-        );
-    END COMPONENT;
+    SIGNAL batpos : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(400, 11);
+    SIGNAL count : STD_LOGIC_VECTOR (20 DOWNTO 0);
+    SIGNAL display : STD_LOGIC_VECTOR (15 DOWNTO 0); -- value to be displayed on 7-segment
+    SIGNAL led_mpx : STD_LOGIC_VECTOR (2 DOWNTO 0); -- 7-segment multiplexing clock
+    SIGNAL hit_count : STD_LOGIC_VECTOR (15 DOWNTO 0); -- signal for hit count
+
     COMPONENT bat_n_ball IS
         PORT (
             v_sync : IN STD_LOGIC;
@@ -47,9 +39,11 @@ ARCHITECTURE Behavioral OF pong IS
             serve : IN STD_LOGIC;
             red : OUT STD_LOGIC;
             green : OUT STD_LOGIC;
-            blue : OUT STD_LOGIC
+            blue : OUT STD_LOGIC;
+            hit_count : OUT STD_LOGIC_VECTOR(15 DOWNTO 0) -- successful hits
         );
     END COMPONENT;
+
     COMPONENT vga_sync IS
         PORT (
             pixel_clk : IN STD_LOGIC;
@@ -65,38 +59,42 @@ ARCHITECTURE Behavioral OF pong IS
             pixel_col : OUT STD_LOGIC_VECTOR (10 DOWNTO 0)
         );
     END COMPONENT;
-    COMPONENT clk_wiz_0 is
+
+    COMPONENT clk_wiz_0 IS
         PORT (
-            clk_in1  : in std_logic;
-            clk_out1 : out std_logic
+            clk_in1  : IN STD_LOGIC;
+            clk_out1 : OUT STD_LOGIC
         );
     END COMPONENT;
+
+    COMPONENT leddec16 IS
+        PORT (
+            dig : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            data : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
+            anode : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+            seg : OUT STD_LOGIC_VECTOR (6 DOWNTO 0)
+        );
+    END COMPONENT; 
 BEGIN
-    -- Process to generate clock signals
-    ckp : PROCESS
+    -- Clock process
+    pos : PROCESS (clk_in) 
     BEGIN
-        WAIT UNTIL rising_edge(clk_in);
-        count <= count + 1; -- counter to generate ADC timing signals
+        IF rising_edge(clk_in) THEN
+            count <= count + 1;
+            IF (btnl = '1' AND count = 0 AND batpos > 0) THEN
+                batpos <= batpos - 10;
+            ELSIF (btnr = '1' AND count = 0 AND batpos < 800) THEN
+                batpos <= batpos + 10;
+            END IF;
+        END IF;
     END PROCESS;
-    serial_clk <= NOT count(4); -- 1.5 MHz serial clock for ADC
-    ADC_SCLK <= serial_clk;
-    sample_clk <= count(9); -- sampling clock is low for 16 SCLKs
-    ADC_CS <= sample_clk;
-    -- Multiplies ADC output (0-4095) by 5/32 to give bat position (0-640)
-    --batpos <= ('0' & adout(11 DOWNTO 3)) + adout(11 DOWNTO 5);
-    batpos <= ("00" & adout(11 DOWNTO 3)) + adout(11 DOWNTO 4);
-    -- 512 + 256 = 768
-    adc : adc_if
-    PORT MAP(-- instantiate ADC serial to parallel interface
-        SCK => serial_clk, 
-        CS => sample_clk, 
-        SDATA1 => ADC_SDATA1, 
-        SDATA2 => ADC_SDATA2, 
-        data_1 => OPEN, 
-        data_2 => adout 
-    );
+
+    -- 7-segment multiplexing clock
+    led_mpx <= count(19 DOWNTO 17);
+
+    -- Instantiate bat and ball component
     add_bb : bat_n_ball
-    PORT MAP(--instantiate bat and ball component
+    PORT MAP(
         v_sync => S_vsync, 
         pixel_row => S_pixel_row, 
         pixel_col => S_pixel_col, 
@@ -104,10 +102,13 @@ BEGIN
         serve => btn0, 
         red => S_red, 
         green => S_green, 
-        blue => S_blue
+        blue => S_blue,
+        hit_count => hit_count -- Connect hit count signal
     );
+
+    -- VGA sync component
     vga_driver : vga_sync
-    PORT MAP(--instantiate vga_sync component
+    PORT MAP(
         pixel_clk => pxl_clk, 
         red_in => S_red & "000", 
         green_in => S_green & "000", 
@@ -120,11 +121,23 @@ BEGIN
         hsync => VGA_hsync, 
         vsync => S_vsync
     );
-    VGA_vsync <= S_vsync; --connect output vsync
-        
+
+    -- VGA vsync output
+    VGA_vsync <= S_vsync;
+
+    -- Clock wizard component
     clk_wiz_0_inst : clk_wiz_0
-    port map (
-      clk_in1 => clk_in,
-      clk_out1 => pxl_clk
+    PORT MAP(
+        clk_in1 => clk_in,
+        clk_out1 => pxl_clk
+    );
+
+    -- 7-segment display component
+    led1 : leddec16
+    PORT MAP(
+        dig => led_mpx, 
+        data => hit_count, -- Display hit count on 7-segment display
+        anode => SEG7_anode, 
+        seg => SEG7_seg
     );
 END Behavioral;
