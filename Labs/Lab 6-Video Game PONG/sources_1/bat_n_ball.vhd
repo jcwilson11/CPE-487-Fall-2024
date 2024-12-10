@@ -13,7 +13,8 @@ ENTITY bat_n_ball IS
         red : OUT STD_LOGIC;
         green : OUT STD_LOGIC;
         blue : OUT STD_LOGIC;
-        hit_count : OUT STD_LOGIC_VECTOR(15 DOWNTO 0) -- successful hits counter
+        hit_count : OUT STD_LOGIC_VECTOR(15 DOWNTO 0); -- successful hits counter
+        SW : IN STD_LOGIC_VECTOR (4 DOWNTO 0)
     );
 END bat_n_ball;
 
@@ -21,7 +22,7 @@ ARCHITECTURE Behavioral OF bat_n_ball IS
     CONSTANT bsize : INTEGER := 8; -- ball size in pixels
     SIGNAL bat_w : INTEGER := 40; -- bat width in pixels
     CONSTANT bat_h : INTEGER := 3; -- bat height in pixels
-    CONSTANT ball_speed : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR (6, 11);
+    SIGNAL ball_speed : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR (6, 11);
     SIGNAL ball_on : STD_LOGIC; -- indicates whether ball is at current pixel position
     SIGNAL bat_on : STD_LOGIC; -- indicates whether bat at over current pixel position
     SIGNAL game_on : STD_LOGIC := '0'; -- indicates whether ball is in play
@@ -37,6 +38,7 @@ BEGIN
     red <= NOT bat_on; -- color setup for red ball and cyan bat on white background
     green <= NOT ball_on;
     blue <= NOT ball_on;
+    ball_speed <= CONV_STD_LOGIC_VECTOR (CONV_INTEGER(sw)+1, 11);
 
     -- Process to draw round ball
     balldraw : PROCESS (ball_x, ball_y, pixel_row, pixel_col) IS
@@ -82,6 +84,7 @@ BEGIN
             hit_detected <= '0'; -- Reset hit detection flag
             game_on <= '1';
             ball_y_motion <= (NOT ball_speed) + 1;
+            ball_x_motion <= ball_speed;
         ELSIF ball_y <= bsize THEN
             ball_y_motion <= ball_speed;
         ELSIF ball_y + bsize >= 600 THEN
@@ -117,6 +120,7 @@ BEGIN
         temp := ('0' & ball_y) + (ball_y_motion(10) & ball_y_motion);
         IF game_on = '0' THEN
             ball_y <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
         ELSIF temp(11) = '1' THEN
             ball_y <= (OTHERS => '0');
         ELSE
