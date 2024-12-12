@@ -29,15 +29,20 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL player_on : STD_LOGIC; -- indicates whether bat at over current pixel position
     SIGNAL game_on : STD_LOGIC := '0'; -- indicates whether ball is in play
     --ball
-    SIGNAL ball_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(150, 11);
+    SIGNAL ball_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(110, 11);
     SIGNAL ball_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion, ball_y_motion : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball1
-    SIGNAL ball_x1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(250, 11);
+    SIGNAL ball_x1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(160, 11);
     SIGNAL ball_y1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion1, ball_y_motion1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on1 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball2
+    SIGNAL ball_x2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(210, 11);
+    SIGNAL ball_y2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motion2, ball_y_motion2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_on2 : STD_LOGIC; -- indicates whether ball is at current pixel position
     -- Add signal for hit counter
     SIGNAL local_hit_count : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
     SIGNAL hit_detected : STD_LOGIC := '0'; -- Tracks whether the bat-ball collision is active
@@ -73,13 +78,13 @@ BEGIN
 
 
     red <= NOT player_on; -- color for setup
-    green <= NOT (ball_on OR ball_on1);
-    blue <= NOT (ball_on OR ball_on1) AND (left_home_on OR right_home_on);
+    green <= NOT (ball_on OR ball_on1 OR ball_on2);
+    blue <= NOT (ball_on OR ball_on1 OR ball_on2) AND (left_home_on OR right_home_on);
     ball_speed <= CONV_STD_LOGIC_VECTOR (CONV_INTEGER(sw)+1, 11);
 
     -- Process to draw round ball
-    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, pixel_row, pixel_col) IS
-        VARIABLE vx, vy, vx1, vy1 : STD_LOGIC_VECTOR (10 DOWNTO 0);
+    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, pixel_row, pixel_col) IS
+        VARIABLE vx, vy, vx1, vy1, vx2, vy2 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     BEGIN
         --1st ball
         IF pixel_col <= ball_x THEN
@@ -114,6 +119,23 @@ BEGIN
         ELSE
             ball_on1 <= '0';
         END IF;
+        
+        --3rd ball
+        IF pixel_col <= ball_x2 THEN
+            vx2 := ball_x2 - pixel_col;
+        ELSE
+            vx2 := pixel_col - ball_x2;
+        END IF;
+        IF pixel_row <= ball_y2 THEN
+            vy2 := ball_y2 - pixel_row;
+        ELSE
+            vy2 := pixel_row - ball_y2;
+        END IF;
+        IF ((vx2 * vx2) + (vy2 * vy2)) < (bsize * bsize) THEN
+            ball_on2 <= game_on;
+        ELSE
+            ball_on2 <= '0';
+        END IF;
     END PROCESS;
 
     -- Process to draw bat
@@ -130,7 +152,7 @@ BEGIN
 
     -- Process to move ball once every frame
     mball : PROCESS
-        VARIABLE temp, temp1 : STD_LOGIC_VECTOR (11 DOWNTO 0);
+        VARIABLE temp, temp1, temp2 : STD_LOGIC_VECTOR (11 DOWNTO 0);
     BEGIN
         WAIT UNTIL rising_edge(v_sync);
         --IF serve = '1' AND game_on = '0' THEN
@@ -139,27 +161,39 @@ BEGIN
             hit_detected <= '0'; -- Reset hit detection flag
             game_on <= '1';
             ball_y_motion <= (NOT ball_speed) + 1;
+            ball_y_motion1 <= (NOT ball_speed) + 1;
+            ball_y_motion2 <= (NOT ball_speed) + 1;
         ELSIF ball_y <= bsize THEN
             --bounce off top wall
             ball_y_motion <= ball_speed;
+            ball_y_motion1 <= ball_speed;
+            ball_y_motion2 <= ball_speed;
         ELSIF ball_y + bsize >= 600 THEN
             ball_y_motion <= (NOT ball_speed) + 1;
+            ball_y_motion1 <= (NOT ball_speed) + 1;
+            ball_y_motion2 <= (NOT ball_speed) + 1;
             --game_on <= '0';
-        END IF;
-
-        -- Bounce off left or right walls
-        IF ball_x + bsize >= 800 THEN
+        ELSIF ball_x + bsize >= 800 THEN
             ball_x_motion <= (NOT ball_speed) + 1;
         ELSIF ball_x <= bsize THEN
             ball_x_motion <= ball_speed;
+        ELSIF ball_x1 + bsize >= 800 THEN
+            ball_x_motion1 <= (NOT ball_speed) + 1;
+        ELSIF ball_x1 <= bsize THEN
+            ball_x_motion1 <= ball_speed;
+        ELSIF ball_x2 + bsize >= 800 THEN
+            ball_x_motion2 <= (NOT ball_speed) + 1;
+        ELSIF ball_x2 <= bsize THEN
+            ball_x_motion2 <= ball_speed;
         END IF;
+
 
         -- Bounce off bat and increment hit count
         IF (ball_x + bsize/2) >= (player_x - player_w) AND
             (ball_x - bsize/2) <= (player_x + player_w) AND
             (ball_y + bsize/2) >= (player_y - player_h) AND
             (ball_y - bsize/2) <= (player_y + player_h) THEN
-            ball_y_motion <= (NOT ball_speed) + 1; -- Bounce back
+            --ball_y_motion <= (NOT ball_speed) + 1; -- Bounce back
             -- Increment hit count only if it's a new hit
             IF hit_detected = '0' THEN
                 local_hit_count <= local_hit_count + 1; -- Increment hit count
@@ -195,14 +229,32 @@ BEGIN
         ELSIF temp1(11) = '1' THEN
             ball_y1 <= (OTHERS => '0');
         ELSE
-            ball_y1 <= temp(10 DOWNTO 0);
+            ball_y1 <= temp1(10 DOWNTO 0);
         END IF;
 
         temp1 := ('0' & ball_x1) + (ball_x_motion1(10) & ball_x_motion1);
         IF temp1(11) = '1' THEN
             ball_x1 <= (OTHERS => '0');
         ELSE
-            ball_x1 <= temp(10 DOWNTO 0);
+            ball_x1 <= temp1(10 DOWNTO 0);
+        END IF;
+        
+        -- Update ball position: 3rd ball
+        temp2 := ('0' & ball_y2) + (ball_y_motion2(10) & ball_y_motion2);
+        IF game_on = '0' THEN
+            ball_y2 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF temp2(11) = '1' THEN
+            ball_y2 <= (OTHERS => '0');
+        ELSE
+            ball_y2 <= temp2(10 DOWNTO 0);
+        END IF;
+
+        temp2 := ('0' & ball_x2) + (ball_x_motion2(10) & ball_x_motion2);
+        IF temp2(11) = '1' THEN
+            ball_x2 <= (OTHERS => '0');
+        ELSE
+            ball_x2 <= temp2(10 DOWNTO 0);
         END IF;
 
     END PROCESS;
