@@ -22,9 +22,9 @@ ENTITY player_n_ball IS
 END player_n_ball;
 
 ARCHITECTURE Behavioral OF player_n_ball IS
-    CONSTANT bsize : INTEGER := 8; -- ball size in pixels
-    CONSTANT player_w : INTEGER := 8; -- bat width in pixels
-    CONSTANT player_h : INTEGER := 8; -- bat height in pixels
+    CONSTANT bsize : INTEGER := 16; -- ball size in pixels
+    CONSTANT player_w : INTEGER := 16; -- bat width in pixels
+    CONSTANT player_h : INTEGER := 16; -- bat height in pixels
     SIGNAL ball_speed : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR (6, 11);
     SIGNAL player_on : STD_LOGIC; -- indicates whether bat at over current pixel position
     SIGNAL game_on : STD_LOGIC := '0'; -- indicates whether ball is in play
@@ -34,27 +34,27 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL ball_x_motion, ball_y_motion : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball1
-    SIGNAL ball_x1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(160, 11);
+    SIGNAL ball_x1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(210, 11);
     SIGNAL ball_y1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion1, ball_y_motion1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on1 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball2
-    SIGNAL ball_x2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(210, 11);
+    SIGNAL ball_x2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(310, 11);
     SIGNAL ball_y2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion2, ball_y_motion2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on2 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball3
-    SIGNAL ball_x3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(260, 11);
+    SIGNAL ball_x3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(410, 11);
     SIGNAL ball_y3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion3, ball_y_motion3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on3 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball4
-    SIGNAL ball_x4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(310, 11);
+    SIGNAL ball_x4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(510, 11);
     SIGNAL ball_y4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion4, ball_y_motion4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on4 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball5
-    SIGNAL ball_x5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(360, 11);
+    SIGNAL ball_x5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(610, 11);
     SIGNAL ball_y5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion5, ball_y_motion5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on5 : STD_LOGIC; -- indicates whether ball is at current pixel position
