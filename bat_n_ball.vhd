@@ -89,7 +89,6 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL ball_x_motionr5, ball_y_motionr5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_onr5 : STD_LOGIC; -- indicates whether ball is at current pixel position
 
-
     -- Add signal for hit counter
     SIGNAL local_hit_count : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
     SIGNAL hit_detected : STD_LOGIC := '0'; -- Tracks whether the bat-ball collision is active
@@ -130,11 +129,7 @@ BEGIN
     ball_speed <= CONV_STD_LOGIC_VECTOR (CONV_INTEGER(sw)+1, 11);
 
     -- Process to draw round ball
-<<<<<<< HEAD
     balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, ball_x4, ball_y4, ball_x5, ball_y5, ball_xr, ball_yr, ball_xr1, ball_yr1, ball_xr2, ball_yr2, ball_xr3, ball_yr3, ball_xr4, ball_yr4, ball_xr5, ball_yr5, pixel_row, pixel_col) IS
-=======
-    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, ball_x4, ball_y4, ball_x5, ball_y5, pixel_row, pixel_col) IS
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
         VARIABLE vx, vy, vx1, vy1, vx2, vy2, vx3, vy3, vx4, vy4, vx5, vy5, vxr, vyr, vxr1, vyr1, vxr2, vyr2, vxr3, vyr3, vxr4, vyr4, vxr5, vyr5  : STD_LOGIC_VECTOR (10 DOWNTO 0);
     BEGIN
         --1st ball
@@ -239,20 +234,12 @@ BEGIN
             ball_on5 <= '0';
         END IF;
         --1st ball
-<<<<<<< HEAD
         IF pixel_col <= ball_xr THEN
-=======
-        IF pixel_col <= ball_x THEN
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
             vxr := ball_xr - pixel_col;
         ELSE
             vxr := pixel_col - ball_xr;
         END IF;
-<<<<<<< HEAD
         IF pixel_row <= ball_yr THEN
-=======
-        IF pixel_row <= ball_y THEN
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
             vyr := ball_yr - pixel_row;
         ELSE
             vyr := pixel_row - ball_yr;
@@ -337,11 +324,7 @@ BEGIN
         ELSE
             vxr5 := pixel_col - ball_xr5;
         END IF;
-<<<<<<< HEAD
         IF pixel_row <= ball_yr5 THEN
-=======
-        IF pixel_row <= ball_y5 THEN
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
             vyr5 := ball_yr5 - pixel_row;
         ELSE
             vyr5 := pixel_row - ball_yr5;
@@ -353,7 +336,6 @@ BEGIN
         END IF;        
     END PROCESS;
    
-
     -- Process to draw bat
     playerdraw : PROCESS (player_x, pixel_row, pixel_col) IS
     BEGIN
@@ -382,21 +364,12 @@ BEGIN
             ball_y_motion3 <= (NOT ball_speed) + 1;
             ball_y_motion4 <= (NOT ball_speed) + 1;
             ball_y_motion5 <= (NOT ball_speed) + 1;
-<<<<<<< HEAD
             ball_y_motionr <=  ball_speed + 1;
             ball_y_motionr1 <= ball_speed + 1;
             ball_y_motionr2 <= ball_speed + 1;
             ball_y_motionr3 <= ball_speed + 1;
             ball_y_motionr4 <= ball_speed + 1;
             ball_y_motionr5 <= ball_speed + 1;
-=======
-            ball_y_motionr <=  ball_speed;
-            ball_y_motionr1 <= ball_speed;
-            ball_y_motionr2 <= ball_speed;
-            ball_y_motionr3 <= ball_speed;
-            ball_y_motionr4 <= ball_speed;
-            ball_y_motionr5 <= ball_speed;
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
         ELSIF ball_y <= bsize THEN
             --bounce off top wall
             ball_y_motion <= ball_speed;
@@ -405,10 +378,7 @@ BEGIN
             ball_y_motion3 <= ball_speed;
             ball_y_motion4 <= ball_speed;
             ball_y_motion5 <= ball_speed;
-<<<<<<< HEAD
         ELSIF ball_yr <= bsize THEN
-=======
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
             ball_y_motionr <=  ball_speed;
             ball_y_motionr1 <= ball_speed;
             ball_y_motionr2 <= ball_speed;
@@ -422,7 +392,6 @@ BEGIN
             ball_y_motion3 <= (NOT ball_speed) + 1;
             ball_y_motion4 <= (NOT ball_speed) + 1;
             ball_y_motion5 <= (NOT ball_speed) + 1;
-<<<<<<< HEAD
         ELSIF ball_yr + bsize >= 600 THEN  
             ball_y_motionr <=  (NOT ball_speed) + 1;
             ball_y_motionr1 <= (NOT ball_speed) + 1;
@@ -430,14 +399,6 @@ BEGIN
             ball_y_motionr3 <= (NOT ball_speed) + 1;
             ball_y_motionr4 <= (NOT ball_speed) + 1;
             ball_y_motionr5 <= (NOT ball_speed) + 1;
-=======
-            ball_y_motionr <=  ball_speed;
-            ball_y_motionr1 <= ball_speed;
-            ball_y_motionr2 <= ball_speed;
-            ball_y_motionr3 <= ball_speed;
-            ball_y_motionr4 <= ball_speed;
-            ball_y_motionr5 <= ball_speed;
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
             --game_on <= '0';
         ELSIF ball_x + bsize >= 800 THEN
             ball_x_motion <= (NOT ball_speed) + 1;
@@ -714,11 +675,7 @@ BEGIN
         IF tempr5(11) = '1' THEN
             ball_xr5 <= (OTHERS => '0');
         ELSE
-<<<<<<< HEAD
             ball_xr5 <= tempr5(10 DOWNTO 0);
-=======
-            ball_x5 <= tempr5(10 DOWNTO 0);
->>>>>>> 07e0ef1f44538701dba8bbcf153ef2ccb8ce091e
         END IF;
         
     END PROCESS;
