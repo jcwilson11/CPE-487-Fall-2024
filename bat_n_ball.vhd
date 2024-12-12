@@ -469,7 +469,7 @@ BEGIN
         -- Update ball position: 1st ball
         temp := ('0' & ball_y) + (ball_y_motion(10) & ball_y_motion);
         IF game_on = '0' THEN
-            ball_y <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_y <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF temp(11) = '1' THEN
             ball_y <= (OTHERS => '0');
@@ -487,7 +487,7 @@ BEGIN
         -- Update ball position: 2nd ball
         temp1 := ('0' & ball_y1) + (ball_y_motion1(10) & ball_y_motion1);
         IF game_on = '0' THEN
-            ball_y1 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_y1 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF temp1(11) = '1' THEN
             ball_y1 <= (OTHERS => '0');
@@ -505,7 +505,7 @@ BEGIN
         -- Update ball position: 3rd ball
         temp2 := ('0' & ball_y2) + (ball_y_motion2(10) & ball_y_motion2);
         IF game_on = '0' THEN
-            ball_y2 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_y2 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF temp2(11) = '1' THEN
             ball_y2 <= (OTHERS => '0');
@@ -523,7 +523,7 @@ BEGIN
         -- Update ball position: 4th ball
         temp3 := ('0' & ball_y3) + (ball_y_motion3(10) & ball_y_motion3);
         IF game_on = '0' THEN
-            ball_y3 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_y3 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF temp3(11) = '1' THEN
             ball_y3 <= (OTHERS => '0');
@@ -540,7 +540,7 @@ BEGIN
         -- Update ball position: 4th ball
         temp4 := ('0' & ball_y4) + (ball_y_motion4(10) & ball_y_motion4);
         IF game_on = '0' THEN
-            ball_y4 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_y4 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF temp4(11) = '1' THEN
             ball_y4 <= (OTHERS => '0');
@@ -557,7 +557,7 @@ BEGIN
         -- Update ball position: 4th ball
         temp5 := ('0' & ball_y5) + (ball_y_motion5(10) & ball_y_motion5);
         IF game_on = '0' THEN
-            ball_y5 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_y5 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF temp5(11) = '1' THEN
             ball_y5 <= (OTHERS => '0');
@@ -575,7 +575,7 @@ BEGIN
         -- Update ball position: 1st ball
         tempr := ('0' & ball_yr) + (ball_y_motionr(10) & ball_y_motionr);
         IF game_on = '0' THEN
-            ball_yr <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_yr <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF tempr(11) = '1' THEN
             ball_yr <= (OTHERS => '0');
@@ -593,7 +593,7 @@ BEGIN
         -- Update ball position: 2nd ball
         tempr1 := ('0' & ball_yr1) + (ball_y_motionr1(10) & ball_y_motionr1);
         IF game_on = '0' THEN
-            ball_yr1 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_yr1 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF tempr1(11) = '1' THEN
             ball_yr1 <= (OTHERS => '0');
@@ -611,7 +611,7 @@ BEGIN
         -- Update ball position: 3rd ball
         tempr2 := ('0' & ball_yr2) + (ball_y_motionr2(10) & ball_y_motionr2);
         IF game_on = '0' THEN
-            ball_yr2 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_yr2 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF tempr2(11) = '1' THEN
             ball_yr2 <= (OTHERS => '0');
@@ -629,7 +629,7 @@ BEGIN
         -- Update ball position: 4th ball
         tempr3 := ('0' & ball_yr3) + (ball_y_motionr3(10) & ball_y_motionr3);
         IF game_on = '0' THEN
-            ball_yr3 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_yr3 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF tempr3(11) = '1' THEN
             ball_yr3 <= (OTHERS => '0');
@@ -646,7 +646,7 @@ BEGIN
         -- Update ball position: 4th ball
         tempr4 := ('0' & ball_yr4) + (ball_y_motionr4(10) & ball_y_motionr4);
         IF game_on = '0' THEN
-            ball_yr4 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_yr4 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF tempr4(11) = '1' THEN
             ball_yr4 <= (OTHERS => '0');
@@ -663,7 +663,7 @@ BEGIN
         -- Update ball position: 4th ball
         tempr5 := ('0' & ball_yr5) + (ball_y_motionr5(10) & ball_y_motionr5);
         IF game_on = '0' THEN
-            ball_yr5 <= CONV_STD_LOGIC_VECTOR(440, 11);
+            ball_yr5 <= CONV_STD_LOGIC_VECTOR(300, 11);
                 
         ELSIF tempr5(11) = '1' THEN
             ball_yr5 <= (OTHERS => '0');
