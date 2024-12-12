@@ -43,6 +43,11 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL ball_y2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion2, ball_y_motion2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on2 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball3
+    SIGNAL ball_x3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(260, 11);
+    SIGNAL ball_y3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motion3, ball_y_motion3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_on3 : STD_LOGIC; -- indicates whether ball is at current pixel position
     -- Add signal for hit counter
     SIGNAL local_hit_count : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
     SIGNAL hit_detected : STD_LOGIC := '0'; -- Tracks whether the bat-ball collision is active
@@ -78,13 +83,13 @@ BEGIN
 
 
     red <= NOT player_on; -- color for setup
-    green <= NOT (ball_on OR ball_on1 OR ball_on2);
-    blue <= NOT (ball_on OR ball_on1 OR ball_on2) AND (left_home_on OR right_home_on);
+    green <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3);
+    blue <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3) AND (left_home_on OR right_home_on);
     ball_speed <= CONV_STD_LOGIC_VECTOR (CONV_INTEGER(sw)+1, 11);
 
     -- Process to draw round ball
-    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, pixel_row, pixel_col) IS
-        VARIABLE vx, vy, vx1, vy1, vx2, vy2 : STD_LOGIC_VECTOR (10 DOWNTO 0);
+    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, pixel_row, pixel_col) IS
+        VARIABLE vx, vy, vx1, vy1, vx2, vy2, vx3, vy3 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     BEGIN
         --1st ball
         IF pixel_col <= ball_x THEN
@@ -136,6 +141,23 @@ BEGIN
         ELSE
             ball_on2 <= '0';
         END IF;
+        
+        --4th ball
+        IF pixel_col <= ball_x3 THEN
+            vx3 := ball_x3 - pixel_col;
+        ELSE
+            vx3 := pixel_col - ball_x3;
+        END IF;
+        IF pixel_row <= ball_y3 THEN
+            vy3 := ball_y3 - pixel_row;
+        ELSE
+            vy3 := pixel_row - ball_y3;
+        END IF;
+        IF ((vx3 * vx3) + (vy3 * vy3)) < (bsize * bsize) THEN
+            ball_on3 <= game_on;
+        ELSE
+            ball_on3 <= '0';
+        END IF;
     END PROCESS;
 
     -- Process to draw bat
@@ -152,7 +174,7 @@ BEGIN
 
     -- Process to move ball once every frame
     mball : PROCESS
-        VARIABLE temp, temp1, temp2 : STD_LOGIC_VECTOR (11 DOWNTO 0);
+        VARIABLE temp, temp1, temp2, temp3 : STD_LOGIC_VECTOR (11 DOWNTO 0);
     BEGIN
         WAIT UNTIL rising_edge(v_sync);
         --IF serve = '1' AND game_on = '0' THEN
@@ -163,15 +185,18 @@ BEGIN
             ball_y_motion <= (NOT ball_speed) + 1;
             ball_y_motion1 <= (NOT ball_speed) + 1;
             ball_y_motion2 <= (NOT ball_speed) + 1;
+            ball_y_motion3 <= (NOT ball_speed) + 1;
         ELSIF ball_y <= bsize THEN
             --bounce off top wall
             ball_y_motion <= ball_speed;
             ball_y_motion1 <= ball_speed;
             ball_y_motion2 <= ball_speed;
+            ball_y_motion3 <= ball_speed;
         ELSIF ball_y + bsize >= 600 THEN
             ball_y_motion <= (NOT ball_speed) + 1;
             ball_y_motion1 <= (NOT ball_speed) + 1;
             ball_y_motion2 <= (NOT ball_speed) + 1;
+            ball_y_motion3 <= (NOT ball_speed) + 1;
             --game_on <= '0';
         ELSIF ball_x + bsize >= 800 THEN
             ball_x_motion <= (NOT ball_speed) + 1;
@@ -185,6 +210,10 @@ BEGIN
             ball_x_motion2 <= (NOT ball_speed) + 1;
         ELSIF ball_x2 <= bsize THEN
             ball_x_motion2 <= ball_speed;
+        ELSIF ball_x3 + bsize >= 800 THEN
+            ball_x_motion3 <= (NOT ball_speed) + 1;
+        ELSIF ball_x3 <= bsize THEN
+            ball_x_motion3 <= ball_speed;
         END IF;
 
 
@@ -257,6 +286,23 @@ BEGIN
             ball_x2 <= temp2(10 DOWNTO 0);
         END IF;
 
+        -- Update ball position: 4th ball
+        temp3 := ('0' & ball_y) + (ball_y_motion3(10) & ball_y_motion3);
+        IF game_on = '0' THEN
+            ball_y3 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF temp3(11) = '1' THEN
+            ball_y3 <= (OTHERS => '0');
+        ELSE
+            ball_y3 <= temp3(10 DOWNTO 0);
+        END IF;
+
+        temp3 := ('0' & ball_x3) + (ball_x_motion3(10) & ball_x_motion3);
+        IF temp3(11) = '1' THEN
+            ball_x3 <= (OTHERS => '0');
+        ELSE
+            ball_x3 <= temp3(10 DOWNTO 0);
+        END IF;
     END PROCESS;
 
     -- Output hit count
