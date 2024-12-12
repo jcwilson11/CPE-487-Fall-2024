@@ -48,6 +48,18 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL ball_y3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion3, ball_y_motion3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on3 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball4
+    SIGNAL ball_x4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(310, 11);
+    SIGNAL ball_y4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motion4, ball_y_motion4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_on4 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball5
+    SIGNAL ball_x5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(360, 11);
+    SIGNAL ball_y5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motion5, ball_y_motion5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_on5 : STD_LOGIC; -- indicates whether ball is at current pixel position
+
+
     -- Add signal for hit counter
     SIGNAL local_hit_count : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
     SIGNAL hit_detected : STD_LOGIC := '0'; -- Tracks whether the bat-ball collision is active
@@ -174,7 +186,7 @@ BEGIN
 
     -- Process to move ball once every frame
     mball : PROCESS
-        VARIABLE temp, temp1, temp2, temp3 : STD_LOGIC_VECTOR (11 DOWNTO 0);
+        VARIABLE temp, temp1, temp2, temp3, temp4, temp5 : STD_LOGIC_VECTOR (11 DOWNTO 0);
     BEGIN
         WAIT UNTIL rising_edge(v_sync);
         --IF serve = '1' AND game_on = '0' THEN
@@ -287,7 +299,7 @@ BEGIN
         END IF;
 
         -- Update ball position: 4th ball
-        temp3 := ('0' & ball_y) + (ball_y_motion3(10) & ball_y_motion3);
+        temp3 := ('0' & ball_y3) + (ball_y_motion3(10) & ball_y_motion3);
         IF game_on = '0' THEN
             ball_y3 <= CONV_STD_LOGIC_VECTOR(440, 11);
                 
@@ -303,6 +315,41 @@ BEGIN
         ELSE
             ball_x3 <= temp3(10 DOWNTO 0);
         END IF;
+        -- Update ball position: 4th ball
+        temp4 := ('0' & ball_y4) + (ball_y_motion4(10) & ball_y_motion4);
+        IF game_on = '0' THEN
+            ball_y4 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF temp4(11) = '1' THEN
+            ball_y4 <= (OTHERS => '0');
+        ELSE
+            ball_y4 <= temp4(10 DOWNTO 0);
+        END IF;
+
+        temp4 := ('0' & ball_x4) + (ball_x_motion4(10) & ball_x_motion4);
+        IF temp4(11) = '1' THEN
+            ball_x4 <= (OTHERS => '0');
+        ELSE
+            ball_x4 <= temp4(10 DOWNTO 0);
+        END IF;
+        -- Update ball position: 4th ball
+        temp5 := ('0' & ball_y5) + (ball_y_motion5(10) & ball_y_motion5);
+        IF game_on = '0' THEN
+            ball_y5 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF temp3(11) = '1' THEN
+            ball_y5 <= (OTHERS => '0');
+        ELSE
+            ball_y5 <= temp5(10 DOWNTO 0);
+        END IF;
+
+        temp5 := ('0' & ball_x5) + (ball_x_motion5(10) & ball_x_motion5);
+        IF temp5(11) = '1' THEN
+            ball_x5 <= (OTHERS => '0');
+        ELSE
+            ball_x5 <= temp5(10 DOWNTO 0);
+        END IF;
+        
     END PROCESS;
 
     -- Output hit count
