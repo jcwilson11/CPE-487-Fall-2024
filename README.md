@@ -3,6 +3,9 @@
 This project uses a VGA connector to display a game with a user controlled square that need to navigate to the safe zone on the other side wihtout hitting the moving circles
 
 
+
+---------
+
 A description of the expected behavior of the project, attachments needed (speaker module, VGA connector, etc.), related images/diagrams, etc. (10 points of the Submission category)
 The more detailed the better – you all know how much I love a good finite state machine and Boolean logic, so those could be some good ideas if appropriate for your system. If not, some kind of high level block diagram showing how different parts of your program connect together and/or showing how what you have created might fit into a more complete system could be appropriate instead.
 
