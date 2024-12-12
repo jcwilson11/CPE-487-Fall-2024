@@ -29,35 +29,65 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL player_on : STD_LOGIC; -- indicates whether bat at over current pixel position
     SIGNAL game_on : STD_LOGIC := '0'; -- indicates whether ball is in play
     --ball
-    SIGNAL ball_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(110, 11);
+    SIGNAL ball_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(120, 11);
     SIGNAL ball_y : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion, ball_y_motion : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball1
-    SIGNAL ball_x1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(210, 11);
+    SIGNAL ball_x1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(220, 11);
     SIGNAL ball_y1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion1, ball_y_motion1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on1 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball2
-    SIGNAL ball_x2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(310, 11);
+    SIGNAL ball_x2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(320, 11);
     SIGNAL ball_y2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion2, ball_y_motion2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on2 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball3
-    SIGNAL ball_x3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(410, 11);
+    SIGNAL ball_x3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(420, 11);
     SIGNAL ball_y3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion3, ball_y_motion3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on3 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball4
-    SIGNAL ball_x4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(510, 11);
+    SIGNAL ball_x4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(520, 11);
     SIGNAL ball_y4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion4, ball_y_motion4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on4 : STD_LOGIC; -- indicates whether ball is at current pixel position
     --ball5
-    SIGNAL ball_x5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(610, 11);
+    SIGNAL ball_x5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(620, 11);
     SIGNAL ball_y5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
     SIGNAL ball_x_motion5, ball_y_motion5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
     SIGNAL ball_on5 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball
+    SIGNAL ball_xr : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(170, 11);
+    SIGNAL ball_yr : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motionr, ball_y_motionr : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_onr : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball1
+    SIGNAL ball_xr1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(270, 11);
+    SIGNAL ball_yr1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motionr1, ball_y_motionr1 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_onr1 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball2
+    SIGNAL ball_xr2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(370, 11);
+    SIGNAL ball_yr2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motionr2, ball_y_motionr2 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_onr2 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball3
+    SIGNAL ball_xr3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(470, 11);
+    SIGNAL ball_yr3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motionr3, ball_y_motionr3 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_onr3 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball4
+    SIGNAL ball_xr4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(570, 11);
+    SIGNAL ball_yr4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motionr4, ball_y_motionr4 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_onr4 : STD_LOGIC; -- indicates whether ball is at current pixel position
+    --ball5
+    SIGNAL ball_xr5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(670, 11);
+    SIGNAL ball_yr5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(300, 11);
+    SIGNAL ball_x_motionr5, ball_y_motionr5 : STD_LOGIC_VECTOR(10 DOWNTO 0) := ball_speed;
+    SIGNAL ball_onr5 : STD_LOGIC; -- indicates whether ball is at current pixel position
 
 
     -- Add signal for hit counter
@@ -95,13 +125,13 @@ BEGIN
 
 
     red <= NOT player_on; -- color for setup
-    green <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3 OR ball_on4 OR ball_on5);
-    blue <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3 OR ball_on4 OR ball_on5) AND (left_home_on OR right_home_on);
+    green <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3 OR ball_on4 OR ball_on5 OR ball_onr OR ball_onr1 OR ball_onr2 OR ball_onr3 OR ball_onr4 OR ball_onr5);
+    blue <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3 OR ball_on4 OR ball_on5 OR ball_onr OR ball_onr1 OR ball_onr2 OR ball_onr3 OR ball_onr4 OR ball_onr5) AND (left_home_on OR right_home_on);
     ball_speed <= CONV_STD_LOGIC_VECTOR (CONV_INTEGER(sw)+1, 11);
 
     -- Process to draw round ball
-    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, ball_x4, ball_y4, ball_x5, ball_y5, pixel_row, pixel_col) IS
-        VARIABLE vx, vy, vx1, vy1, vx2, vy2, vx3, vy3, vx4, vy4, vx5, vy5 : STD_LOGIC_VECTOR (10 DOWNTO 0);
+    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, ball_x4, ball_y4, ball_x5, ball_y5, ball_xr, ball_yr, ball_xr1, ball_yr1, ball_xr2, ball_yr2, ball_xr3, ball_yr3, ball_xr4, ball_yr4, ball_xr5, ball_yr5, pixel_row, pixel_col) IS
+        VARIABLE vx, vy, vx1, vy1, vx2, vy2, vx3, vy3, vx4, vy4, vx5, vy5, vxr, vyr, vxr1, vyr1, vxr2, vyr2, vxr3, vyr3, vxr4, vyr4, vxr5, vyr5  : STD_LOGIC_VECTOR (10 DOWNTO 0);
     BEGIN
         --1st ball
         IF pixel_col <= ball_x THEN
@@ -204,6 +234,107 @@ BEGIN
         ELSE
             ball_on5 <= '0';
         END IF;
+        --1st ball
+        IF pixel_col <= ball_xr THEN
+            vxr := ball_xr - pixel_col;
+        ELSE
+            vxr := pixel_col - ball_xr;
+        END IF;
+        IF pixel_row <= ball_yr THEN
+            vyr := ball_yr - pixel_row;
+        ELSE
+            vyr := pixel_row - ball_yr;
+        END IF;
+        IF ((vxr * vxr) + (vyr * vyr)) < (bsize * bsize) THEN
+            ball_onr <= game_on;
+        ELSE
+            ball_onr <= '0';
+        END IF;
+        
+        --2nd ball
+        IF pixel_col <= ball_xr1 THEN
+            vxr1 := ball_xr1 - pixel_col;
+        ELSE
+            vxr1 := pixel_col - ball_xr1;
+        END IF;
+        IF pixel_row <= ball_yr1 THEN
+            vyr1 := ball_yr1 - pixel_row;
+        ELSE
+            vyr1 := pixel_row - ball_yr1;
+        END IF;
+        IF ((vxr1 * vxr1) + (vyr1 * vyr1)) < (bsize * bsize) THEN
+            ball_onr1 <= game_on;
+        ELSE
+            ball_onr1 <= '0';
+        END IF;
+        
+        --3rd ball
+        IF pixel_col <= ball_xr2 THEN
+            vxr2 := ball_xr2 - pixel_col;
+        ELSE
+            vxr2 := pixel_col - ball_xr2;
+        END IF;
+        IF pixel_row <= ball_yr2 THEN
+            vyr2 := ball_yr2 - pixel_row;
+        ELSE
+            vyr2 := pixel_row - ball_yr2;
+        END IF;
+        IF ((vxr2 * vxr2) + (vyr2 * vyr2)) < (bsize * bsize) THEN
+            ball_onr2 <= game_on;
+        ELSE
+            ball_onr2 <= '0';
+        END IF;
+        
+        --4th ball
+        IF pixel_col <= ball_xr3 THEN
+            vxr3 := ball_xr3 - pixel_col;
+        ELSE
+            vxr3 := pixel_col - ball_xr3;
+        END IF;
+        IF pixel_row <= ball_yr3 THEN
+            vyr3 := ball_yr3 - pixel_row;
+        ELSE
+            vyr3 := pixel_row - ball_yr3;
+        END IF;
+        IF ((vxr3 * vxr3) + (vyr3 * vyr3)) < (bsize * bsize) THEN
+            ball_onr3 <= game_on;
+        ELSE
+            ball_onr3 <= '0';
+        END IF;
+        
+        --5th ball
+        IF pixel_col <= ball_xr4 THEN
+            vxr4 := ball_xr4 - pixel_col;
+        ELSE
+            vxr4 := pixel_col - ball_xr4;
+        END IF;
+        IF pixel_row <= ball_yr4 THEN
+            vyr4 := ball_yr4 - pixel_row;
+        ELSE
+            vyr4 := pixel_row - ball_yr4;
+        END IF;
+        IF ((vxr4 * vxr4) + (vyr4 * vyr4)) < (bsize * bsize) THEN
+            ball_onr4 <= game_on;
+        ELSE
+            ball_onr4 <= '0';
+        END IF;
+        
+        --6th ball
+        IF pixel_col <= ball_xr5 THEN
+            vxr5 := ball_xr5 - pixel_col;
+        ELSE
+            vxr5 := pixel_col - ball_xr5;
+        END IF;
+        IF pixel_row <= ball_yr5 THEN
+            vyr5 := ball_yr5 - pixel_row;
+        ELSE
+            vyr5 := pixel_row - ball_yr5;
+        END IF;
+        IF ((vxr5 * vxr5) + (vyr5 * vyr5)) < (bsize * bsize) THEN
+            ball_onr5 <= game_on;
+        ELSE
+            ball_onr5 <= '0';
+        END IF;        
     END PROCESS;
    
 
@@ -221,7 +352,7 @@ BEGIN
 
     -- Process to move ball once every frame
     mball : PROCESS
-        VARIABLE temp, temp1, temp2, temp3, temp4, temp5 : STD_LOGIC_VECTOR (11 DOWNTO 0);
+        VARIABLE temp, temp1, temp2, temp3, temp4, temp5, tempr, tempr1, tempr2, tempr3, tempr4, tempr5 : STD_LOGIC_VECTOR (11 DOWNTO 0);
     BEGIN
         WAIT UNTIL rising_edge(v_sync);
         --IF serve = '1' AND game_on = '0' THEN
@@ -235,6 +366,12 @@ BEGIN
             ball_y_motion3 <= (NOT ball_speed) + 1;
             ball_y_motion4 <= (NOT ball_speed) + 1;
             ball_y_motion5 <= (NOT ball_speed) + 1;
+            ball_y_motionr <=  ball_speed + 1;
+            ball_y_motionr1 <= ball_speed + 1;
+            ball_y_motionr2 <= ball_speed + 1;
+            ball_y_motionr3 <= ball_speed + 1;
+            ball_y_motionr4 <= ball_speed + 1;
+            ball_y_motionr5 <= ball_speed + 1;
         ELSIF ball_y <= bsize THEN
             --bounce off top wall
             ball_y_motion <= ball_speed;
@@ -243,6 +380,13 @@ BEGIN
             ball_y_motion3 <= ball_speed;
             ball_y_motion4 <= ball_speed;
             ball_y_motion5 <= ball_speed;
+        ELSIF ball_yr <= bsize THEN
+            ball_y_motionr <=  ball_speed;
+            ball_y_motionr1 <= ball_speed;
+            ball_y_motionr2 <= ball_speed;
+            ball_y_motionr3 <= ball_speed;
+            ball_y_motionr4 <= ball_speed;
+            ball_y_motionr5 <= ball_speed;
         ELSIF ball_y + bsize >= 600 THEN
             ball_y_motion <= (NOT ball_speed) + 1;
             ball_y_motion1 <= (NOT ball_speed) + 1;
@@ -250,6 +394,13 @@ BEGIN
             ball_y_motion3 <= (NOT ball_speed) + 1;
             ball_y_motion4 <= (NOT ball_speed) + 1;
             ball_y_motion5 <= (NOT ball_speed) + 1;
+        ELSIF ball_yr + bsize >= 600 THEN  
+            ball_y_motionr <=  (NOT ball_speed) + 1;
+            ball_y_motionr1 <= (NOT ball_speed) + 1;
+            ball_y_motionr2 <= (NOT ball_speed) + 1;
+            ball_y_motionr3 <= (NOT ball_speed) + 1;
+            ball_y_motionr4 <= (NOT ball_speed) + 1;
+            ball_y_motionr5 <= (NOT ball_speed) + 1;
             --game_on <= '0';
         ELSIF ball_x + bsize >= 800 THEN
             ball_x_motion <= (NOT ball_speed) + 1;
@@ -275,6 +426,30 @@ BEGIN
             ball_x_motion5 <= (NOT ball_speed) + 1;
         ELSIF ball_x5 <= bsize THEN
             ball_x_motion5 <= ball_speed;
+        ELSIF ball_xr + bsize >= 800 THEN
+            ball_x_motionr <= (NOT ball_speed) + 1;
+        ELSIF ball_xr <= bsize THEN
+            ball_x_motionr <= ball_speed;
+        ELSIF ball_xr1 + bsize >= 800 THEN
+            ball_x_motionr1 <= (NOT ball_speed) + 1;
+        ELSIF ball_xr1 <= bsize THEN
+            ball_x_motionr1 <= ball_speed;
+        ELSIF ball_xr2 + bsize >= 800 THEN
+            ball_x_motionr2 <= (NOT ball_speed) + 1;
+        ELSIF ball_xr2 <= bsize THEN
+            ball_x_motionr2 <= ball_speed;
+        ELSIF ball_xr3 + bsize >= 800 THEN
+            ball_x_motionr3 <= (NOT ball_speed) + 1;
+        ELSIF ball_xr3 <= bsize THEN
+            ball_x_motionr3 <= ball_speed;
+        ELSIF ball_xr4 + bsize >= 800 THEN
+            ball_x_motionr4 <= (NOT ball_speed) + 1;
+        ELSIF ball_xr4 <= bsize THEN
+            ball_x_motionr4 <= ball_speed;
+        ELSIF ball_xr5 + bsize >= 800 THEN
+            ball_x_motionr5 <= (NOT ball_speed) + 1;
+        ELSIF ball_xr5 <= bsize THEN
+            ball_x_motionr5 <= ball_speed;
         END IF;
 
 
@@ -397,6 +572,112 @@ BEGIN
             ball_x5 <= (OTHERS => '0');
         ELSE
             ball_x5 <= temp5(10 DOWNTO 0);
+        END IF;
+        
+        -- Update ball position: 1st ball
+        tempr := ('0' & ball_yr) + (ball_y_motionr(10) & ball_y_motionr);
+        IF game_on = '0' THEN
+            ball_yr <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF tempr(11) = '1' THEN
+            ball_yr <= (OTHERS => '0');
+        ELSE
+            ball_yr <= tempr(10 DOWNTO 0);
+        END IF;
+
+        tempr := ('0' & ball_xr) + (ball_x_motionr(10) & ball_x_motionr);
+        IF tempr(11) = '1' THEN
+            ball_xr <= (OTHERS => '0');
+        ELSE
+            ball_xr <= tempr(10 DOWNTO 0);
+        END IF;
+        
+        -- Update ball position: 2nd ball
+        tempr1 := ('0' & ball_yr1) + (ball_y_motionr1(10) & ball_y_motionr1);
+        IF game_on = '0' THEN
+            ball_yr1 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF tempr1(11) = '1' THEN
+            ball_yr1 <= (OTHERS => '0');
+        ELSE
+            ball_yr1 <= tempr1(10 DOWNTO 0);
+        END IF;
+
+        tempr1 := ('0' & ball_xr1) + (ball_x_motionr1(10) & ball_x_motionr1);
+        IF tempr1(11) = '1' THEN
+            ball_xr1 <= (OTHERS => '0');
+        ELSE
+            ball_xr1 <= tempr1(10 DOWNTO 0);
+        END IF;
+        
+        -- Update ball position: 3rd ball
+        tempr2 := ('0' & ball_yr2) + (ball_y_motionr2(10) & ball_y_motionr2);
+        IF game_on = '0' THEN
+            ball_yr2 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF tempr2(11) = '1' THEN
+            ball_yr2 <= (OTHERS => '0');
+        ELSE
+            ball_yr2 <= tempr2(10 DOWNTO 0);
+        END IF;
+
+        tempr2 := ('0' & ball_xr2) + (ball_x_motionr2(10) & ball_x_motionr2);
+        IF tempr2(11) = '1' THEN
+            ball_xr2 <= (OTHERS => '0');
+        ELSE
+            ball_xr2 <= tempr2(10 DOWNTO 0);
+        END IF;
+
+        -- Update ball position: 4th ball
+        tempr3 := ('0' & ball_yr3) + (ball_y_motionr3(10) & ball_y_motionr3);
+        IF game_on = '0' THEN
+            ball_yr3 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF tempr3(11) = '1' THEN
+            ball_yr3 <= (OTHERS => '0');
+        ELSE
+            ball_yr3 <= tempr3(10 DOWNTO 0);
+        END IF;
+
+        tempr3 := ('0' & ball_xr3) + (ball_x_motionr3(10) & ball_x_motionr3);
+        IF tempr3(11) = '1' THEN
+            ball_xr3 <= (OTHERS => '0');
+        ELSE
+            ball_xr3 <= tempr3(10 DOWNTO 0);
+        END IF;
+        -- Update ball position: 4th ball
+        tempr4 := ('0' & ball_yr4) + (ball_y_motionr4(10) & ball_y_motionr4);
+        IF game_on = '0' THEN
+            ball_yr4 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF tempr4(11) = '1' THEN
+            ball_yr4 <= (OTHERS => '0');
+        ELSE
+            ball_yr4 <= tempr4(10 DOWNTO 0);
+        END IF;
+
+        tempr4 := ('0' & ball_xr4) + (ball_x_motionr4(10) & ball_x_motionr4);
+        IF tempr4(11) = '1' THEN
+            ball_xr4 <= (OTHERS => '0');
+        ELSE
+            ball_xr4 <= tempr4(10 DOWNTO 0);
+        END IF;
+        -- Update ball position: 4th ball
+        tempr5 := ('0' & ball_yr5) + (ball_y_motionr5(10) & ball_y_motionr5);
+        IF game_on = '0' THEN
+            ball_yr5 <= CONV_STD_LOGIC_VECTOR(440, 11);
+                
+        ELSIF tempr5(11) = '1' THEN
+            ball_yr5 <= (OTHERS => '0');
+        ELSE
+            ball_yr5 <= tempr5(10 DOWNTO 0);
+        END IF;
+
+        tempr5 := ('0' & ball_xr5) + (ball_x_motionr5(10) & ball_x_motionr5);
+        IF tempr5(11) = '1' THEN
+            ball_xr5 <= (OTHERS => '0');
+        ELSE
+            ball_xr5 <= tempr5(10 DOWNTO 0);
         END IF;
         
     END PROCESS;
