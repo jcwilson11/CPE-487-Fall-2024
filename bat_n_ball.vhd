@@ -95,13 +95,13 @@ BEGIN
 
 
     red <= NOT player_on; -- color for setup
-    green <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3);
-    blue <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3) AND (left_home_on OR right_home_on);
+    green <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3 OR ball_on4 OR ball_on5);
+    blue <= NOT (ball_on OR ball_on1 OR ball_on2 OR ball_on3 OR ball_on4 OR ball_on5) AND (left_home_on OR right_home_on);
     ball_speed <= CONV_STD_LOGIC_VECTOR (CONV_INTEGER(sw)+1, 11);
 
     -- Process to draw round ball
-    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, pixel_row, pixel_col) IS
-        VARIABLE vx, vy, vx1, vy1, vx2, vy2, vx3, vy3 : STD_LOGIC_VECTOR (10 DOWNTO 0);
+    balldraw : PROCESS (ball_x, ball_y, ball_x1, ball_y1, ball_x2, ball_y2, ball_x3, ball_y3, ball_x4, ball_y4, ball_x5, ball_y5, pixel_row, pixel_col) IS
+        VARIABLE vx, vy, vx1, vy1, vx2, vy2, vx3, vy3, vx4, vy4, vx5, vy5 : STD_LOGIC_VECTOR (10 DOWNTO 0);
     BEGIN
         --1st ball
         IF pixel_col <= ball_x THEN
@@ -170,7 +170,42 @@ BEGIN
         ELSE
             ball_on3 <= '0';
         END IF;
+        
+        --5th ball
+        IF pixel_col <= ball_x4 THEN
+            vx4 := ball_x4 - pixel_col;
+        ELSE
+            vx4 := pixel_col - ball_x4;
+        END IF;
+        IF pixel_row <= ball_y4 THEN
+            vy4 := ball_y4 - pixel_row;
+        ELSE
+            vy4 := pixel_row - ball_y4;
+        END IF;
+        IF ((vx4 * vx4) + (vy4 * vy4)) < (bsize * bsize) THEN
+            ball_on4 <= game_on;
+        ELSE
+            ball_on4 <= '0';
+        END IF;
+        
+        --6th ball
+        IF pixel_col <= ball_x5 THEN
+            vx5 := ball_x5 - pixel_col;
+        ELSE
+            vx5 := pixel_col - ball_x5;
+        END IF;
+        IF pixel_row <= ball_y5 THEN
+            vy5 := ball_y5 - pixel_row;
+        ELSE
+            vy5 := pixel_row - ball_y5;
+        END IF;
+        IF ((vx5 * vx5) + (vy5 * vy5)) < (bsize * bsize) THEN
+            ball_on5 <= game_on;
+        ELSE
+            ball_on5 <= '0';
+        END IF;
     END PROCESS;
+   
 
     -- Process to draw bat
     playerdraw : PROCESS (player_x, pixel_row, pixel_col) IS
@@ -198,17 +233,23 @@ BEGIN
             ball_y_motion1 <= (NOT ball_speed) + 1;
             ball_y_motion2 <= (NOT ball_speed) + 1;
             ball_y_motion3 <= (NOT ball_speed) + 1;
+            ball_y_motion4 <= (NOT ball_speed) + 1;
+            ball_y_motion5 <= (NOT ball_speed) + 1;
         ELSIF ball_y <= bsize THEN
             --bounce off top wall
             ball_y_motion <= ball_speed;
             ball_y_motion1 <= ball_speed;
             ball_y_motion2 <= ball_speed;
             ball_y_motion3 <= ball_speed;
+            ball_y_motion4 <= ball_speed;
+            ball_y_motion5 <= ball_speed;
         ELSIF ball_y + bsize >= 600 THEN
             ball_y_motion <= (NOT ball_speed) + 1;
             ball_y_motion1 <= (NOT ball_speed) + 1;
             ball_y_motion2 <= (NOT ball_speed) + 1;
             ball_y_motion3 <= (NOT ball_speed) + 1;
+            ball_y_motion4 <= (NOT ball_speed) + 1;
+            ball_y_motion5 <= (NOT ball_speed) + 1;
             --game_on <= '0';
         ELSIF ball_x + bsize >= 800 THEN
             ball_x_motion <= (NOT ball_speed) + 1;
@@ -226,6 +267,14 @@ BEGIN
             ball_x_motion3 <= (NOT ball_speed) + 1;
         ELSIF ball_x3 <= bsize THEN
             ball_x_motion3 <= ball_speed;
+        ELSIF ball_x4 + bsize >= 800 THEN
+            ball_x_motion4 <= (NOT ball_speed) + 1;
+        ELSIF ball_x4 <= bsize THEN
+            ball_x_motion4 <= ball_speed;
+        ELSIF ball_x5 + bsize >= 800 THEN
+            ball_x_motion5 <= (NOT ball_speed) + 1;
+        ELSIF ball_x5 <= bsize THEN
+            ball_x_motion5 <= ball_speed;
         END IF;
 
 
@@ -337,7 +386,7 @@ BEGIN
         IF game_on = '0' THEN
             ball_y5 <= CONV_STD_LOGIC_VECTOR(440, 11);
                 
-        ELSIF temp3(11) = '1' THEN
+        ELSIF temp5(11) = '1' THEN
             ball_y5 <= (OTHERS => '0');
         ELSE
             ball_y5 <= temp5(10 DOWNTO 0);
