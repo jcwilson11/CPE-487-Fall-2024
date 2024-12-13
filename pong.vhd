@@ -33,6 +33,7 @@ ARCHITECTURE Behavioral OF pong IS
     SIGNAL display : STD_LOGIC_VECTOR (15 DOWNTO 0); -- value to be displayed on 7-segment
     SIGNAL led_mpx : STD_LOGIC_VECTOR (2 DOWNTO 0); -- 7-segment multiplexing clock
     SIGNAL hit_count : STD_LOGIC_VECTOR (15 DOWNTO 0); -- signal for hit count
+    SIGNAL old_hit_count : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
 
     COMPONENT player_n_ball IS
         PORT (
@@ -41,7 +42,7 @@ ARCHITECTURE Behavioral OF pong IS
             pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
             player_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
             player_y : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
-            serve : IN STD_LOGIC;
+            reset : IN STD_LOGIC;
             red : OUT STD_LOGIC;
             green : OUT STD_LOGIC;
             blue : OUT STD_LOGIC;
@@ -87,15 +88,27 @@ BEGIN
     BEGIN
         IF rising_edge(clk_in) THEN
             count <= count + 1;
-            IF (btnl = '1' AND count = 0 AND player_x > 0) THEN
+            -- Check if a new hit has occurred
+            IF hit_count > old_hit_count THEN
+                -- Reset player position
+                player_x <= CONV_STD_LOGIC_VECTOR(75, 11);   -- original x position
+                player_y <= CONV_STD_LOGIC_VECTOR(300, 11);  -- original y position
+            ELSIF btnd = '1' THEN
+                player_x <= CONV_STD_LOGIC_VECTOR(75, 11);   -- original x position
+                player_y <= CONV_STD_LOGIC_VECTOR(300, 11);  -- original y position
+            END IF;
+        
+            -- Update old_hit_count for next cycle
+            old_hit_count <= hit_count;
+            IF (btnl = '1' AND count = 0 AND player_x > 10) THEN
                 player_x <= player_x - 5;
             ELSIF (btnr = '1' AND count = 0 AND player_x < 800) THEN
                 player_x <= player_x + 5;
             END IF;
             
-            IF (btnu = '1' AND count = 0 AND player_y > 0) THEN
+            IF (btnu = '1' AND count = 0 AND player_y > 10) THEN
                 player_y <= player_y - 5; -- Move up
-            ELSIF (btnd = '1' AND count = 0 AND player_y < 590) THEN
+            ELSIF (btn0 = '1' AND count = 0 AND player_y < 590) THEN
                 player_y <= player_y + 5; -- Move down
             END IF;
         END IF;
@@ -112,7 +125,7 @@ BEGIN
         pixel_col => S_pixel_col, 
         player_x => player_x, 
         player_y => player_y,
-        serve => btn0, 
+        reset => btnd, 
         red => S_red, 
         green => S_green, 
         blue => S_blue,

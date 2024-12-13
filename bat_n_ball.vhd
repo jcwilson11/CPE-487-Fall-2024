@@ -10,7 +10,7 @@ ENTITY player_n_ball IS
         pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         player_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current bat x position
         player_y : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current bat y position
-        serve : IN STD_LOGIC; -- initiates serve
+        reset : IN STD_LOGIC; -- initiates reset
         red : OUT STD_LOGIC;
         green : OUT STD_LOGIC;
         blue : OUT STD_LOGIC;
@@ -353,7 +353,11 @@ BEGIN
         VARIABLE temp, temp1, temp2, temp3, temp4, temp5, tempr, tempr1, tempr2, tempr3, tempr4, tempr5 : STD_LOGIC_VECTOR (11 DOWNTO 0);
     BEGIN
         WAIT UNTIL rising_edge(v_sync);
-        --IF serve = '1' AND game_on = '0' THEN
+        IF reset = '1' THEN
+            local_hit_count <= (OTHERS => '0'); -- Reset hit count
+            hit_detected <= '0'; -- Reset hit detection flag
+        END IF;
+        
         IF game_on = '0' THEN
             local_hit_count <= (OTHERS => '0'); -- Reset hit count
             hit_detected <= '0'; -- Reset hit detection flag
@@ -452,18 +456,76 @@ BEGIN
 
 
         -- Bounce off bat and increment hit count
-        IF (ball_x + bsize/2) >= (player_x - player_w) AND
-            (ball_x - bsize/2) <= (player_x + player_w) AND
-            (ball_y + bsize/2) >= (player_y - player_h) AND
-            (ball_y - bsize/2) <= (player_y + player_h) THEN
-            --ball_y_motion <= (NOT ball_speed) + 1; -- Bounce back
-            -- Increment hit count only if it's a new hit
+        IF (
+            (
+                (ball_x + bsize/2) >= (player_x - player_w) AND 
+                (ball_x - bsize/2) <= (player_x + player_w) AND
+                (ball_y + bsize/2) >= (player_y - player_h) AND
+                (ball_y - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_x1 + bsize/2) >= (player_x - player_w) AND 
+                (ball_x1 - bsize/2) <= (player_x + player_w) AND
+                (ball_y1 + bsize/2) >= (player_y - player_h) AND
+                (ball_y1 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_x2 + bsize/2) >= (player_x - player_w) AND 
+                (ball_x2 - bsize/2) <= (player_x + player_w) AND
+                (ball_y2 + bsize/2) >= (player_y - player_h) AND
+                (ball_y2 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_x3 + bsize/2) >= (player_x - player_w) AND 
+                (ball_x3 - bsize/2) <= (player_x + player_w) AND
+                (ball_y3 + bsize/2) >= (player_y - player_h) AND
+                (ball_y3 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_x4 + bsize/2) >= (player_x - player_w) AND 
+                (ball_x4 - bsize/2) <= (player_x + player_w) AND
+                (ball_y4 + bsize/2) >= (player_y - player_h) AND
+                (ball_y4 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_x5 + bsize/2) >= (player_x - player_w) AND 
+                (ball_x5 - bsize/2) <= (player_x + player_w) AND
+                (ball_y5 + bsize/2) >= (player_y - player_h) AND
+                (ball_y5 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_xr + bsize/2) >= (player_x - player_w) AND 
+                (ball_xr - bsize/2) <= (player_x + player_w) AND
+                (ball_yr + bsize/2) >= (player_y - player_h) AND
+                (ball_yr - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_xr1 + bsize/2) >= (player_x - player_w) AND 
+                (ball_xr1 - bsize/2) <= (player_x + player_w) AND
+                (ball_yr1 + bsize/2) >= (player_y - player_h) AND
+                (ball_yr1 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_xr2 + bsize/2) >= (player_x - player_w) AND 
+                (ball_xr2 - bsize/2) <= (player_x + player_w) AND
+                (ball_yr2 + bsize/2) >= (player_y - player_h) AND
+                (ball_yr2 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_xr3 + bsize/2) >= (player_x - player_w) AND 
+                (ball_xr3 - bsize/2) <= (player_x + player_w) AND
+                (ball_yr3 + bsize/2) >= (player_y - player_h) AND
+                (ball_yr3 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_xr4 + bsize/2) >= (player_x - player_w) AND 
+                (ball_xr4 - bsize/2) <= (player_x + player_w) AND
+                (ball_yr4 + bsize/2) >= (player_y - player_h) AND
+                (ball_yr4 - bsize/2) <= (player_y + player_h)
+            ) OR (
+                (ball_xr5 + bsize/2) >= (player_x - player_w) AND 
+                (ball_xr5 - bsize/2) <= (player_x + player_w) AND
+                (ball_yr5 + bsize/2) >= (player_y - player_h) AND
+                (ball_yr5 - bsize/2) <= (player_y + player_h)
+            )
+        ) THEN
+            -- At least one ball collided with the player
             IF hit_detected = '0' THEN
-                local_hit_count <= local_hit_count + 1; -- Increment hit count
+                local_hit_count <= local_hit_count + 1; -- Increment once per collision event
             END IF;
-            hit_detected <= '1'; -- Mark the collision as detected
+            hit_detected <= '1';
         ELSE
-            hit_detected <= '0'; -- Reset the hit detection flag when no collision
+            hit_detected <= '0';
         END IF;
 
         -- Update ball position: 1st ball
