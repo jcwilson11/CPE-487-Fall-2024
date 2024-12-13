@@ -100,15 +100,15 @@ BEGIN
         
             -- Update old_hit_count for next cycle
             old_hit_count <= hit_count;
-            IF (btnl = '1' AND count = 0 AND player_x > 10) THEN
+            IF (btnl = '1' AND count = 0 AND player_x > 20) THEN
                 player_x <= player_x - 5;
-            ELSIF (btnr = '1' AND count = 0 AND player_x < 800) THEN
+            ELSIF (btnr = '1' AND count = 0 AND player_x < 780) THEN
                 player_x <= player_x + 5;
             END IF;
             
-            IF (btnu = '1' AND count = 0 AND player_y > 10) THEN
+            IF (btnu = '1' AND count = 0 AND player_y > 20) THEN
                 player_y <= player_y - 5; -- Move up
-            ELSIF (btn0 = '1' AND count = 0 AND player_y < 590) THEN
+            ELSIF (btn0 = '1' AND count = 0 AND player_y < 580) THEN
                 player_y <= player_y + 5; -- Move down
             END IF;
         END IF;
