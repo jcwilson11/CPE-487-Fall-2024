@@ -1,7 +1,17 @@
 # WorldsHardestGame
 
-This project uses a VGA connector to display a game with a user controlled square that need to navigate to the safe zone on the other side wihtout hitting the moving circles
+This project uses a VGA connector to display a game with a user-controlled square that needs to navigate to the safe zone on the other side without hitting the moving circles. Each circle alternates in the direction that it is moving, The buttons [buttons] are use to control the square up down left and right. If the square hits any circle it moves back to the starting position. Once it reaches the other safe zone on the other side ... . 
 
+
+## Vivado and Nexys A7 Implementation
+We used the Pong Lab 6 code as the starter code.
+1. We had to use a VGA connector to display our code on the screen. 
+2. We repurposed the bat to be a square rather than a rectangle and gave it x and y motion rather than just x motion
+3. We added two safe zones on both sides of the screen, one to spawn in and the other to signify victoryonce entered. 
+4. We took away the x motion of the ball so that it continuously moves up and down. Then we proceded to duplicate the balls so that there is 6 moving in the same direction.
+5. Then we added 6 more balls moving in opposite directions of the initial 6 balls
+6. We decided to keep to the speed logic from the switches as a way to change the difficulty of the game. 
+   
 
 
 ---------
