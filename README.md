@@ -2,6 +2,9 @@
 
 This project uses a VGA connector to display a game with a user-controlled square that needs to navigate to the safe zone on the other side without hitting the moving circles. Each circle alternates in the direction that it is moving, The buttons [buttons] are use to control the square up down left and right. If the square hits any circle it moves back to the starting position. Once it reaches the other safe zone on the other side ... . 
 
+Inspiration for our game was taken from "World's Hardest Game" as shown below
+![Portrait](PicsandVids/World'sHardestGame.png)
+
 
 ### Vivado and Nexys A7 Implementation
 We used the Pong Lab 6 code as the starter code.
