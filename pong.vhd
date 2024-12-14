@@ -34,7 +34,20 @@ ARCHITECTURE Behavioral OF pong IS
     SIGNAL led_mpx : STD_LOGIC_VECTOR (2 DOWNTO 0); -- 7-segment multiplexing clock
     SIGNAL hit_count : STD_LOGIC_VECTOR (15 DOWNTO 0); -- signal for hit count
     SIGNAL old_hit_count : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
-
+    --bottom left area
+    CONSTANT blocked_left   : INTEGER := 0;
+    CONSTANT blocked_right  : INTEGER := 100;
+    CONSTANT blocked_top    : INTEGER := 380;
+    CONSTANT blocked_bottom : INTEGER := 600;
+    --top left area
+    CONSTANT blocked_left1   : INTEGER := 0;
+    CONSTANT blocked_right1  : INTEGER := 100;
+    CONSTANT blocked_top1    : INTEGER := 0;
+    CONSTANT blocked_bottom1 : INTEGER := 220;
+    
+    CONSTANT player_w : INTEGER := 16; 
+    CONSTANT player_h : INTEGER := 16;
+    
     COMPONENT player_n_ball IS
         PORT (
             v_sync : IN STD_LOGIC;
@@ -83,36 +96,80 @@ ARCHITECTURE Behavioral OF pong IS
         );
     END COMPONENT; 
 BEGIN
-    -- Clock process
-    pos : PROCESS (clk_in) 
-    BEGIN
-        IF rising_edge(clk_in) THEN
-            count <= count + 1;
-            -- Check if a new hit has occurred
-            IF hit_count > old_hit_count THEN
-                -- Reset player position
-                player_x <= CONV_STD_LOGIC_VECTOR(75, 11);   -- original x position
-                player_y <= CONV_STD_LOGIC_VECTOR(300, 11);  -- original y position
-            ELSIF btnd = '1' THEN
-                player_x <= CONV_STD_LOGIC_VECTOR(75, 11);   -- original x position
-                player_y <= CONV_STD_LOGIC_VECTOR(300, 11);  -- original y position
-            END IF;
+        -- Clock process
+        pos : PROCESS (clk_in)
+            VARIABLE new_x, new_y : INTEGER;
+            VARIABLE no_overlap_first, no_overlap_second : BOOLEAN;
+        BEGIN
+            IF rising_edge(clk_in) THEN
+                count <= count + 1;
         
-            -- Update old_hit_count for next cycle
-            old_hit_count <= hit_count;
-            IF (btnl = '1' AND count = 0 AND player_x > 20) THEN
-                player_x <= player_x - 5;
-            ELSIF (btnr = '1' AND count = 0 AND player_x < 780) THEN
-                player_x <= player_x + 5;
-            END IF;
-            
-            IF (btnu = '1' AND count = 0 AND player_y > 20) THEN
-                player_y <= player_y - 5; -- Move up
-            ELSIF (btn0 = '1' AND count = 0 AND player_y < 580) THEN
-                player_y <= player_y + 5; -- Move down
-            END IF;
-        END IF;
-    END PROCESS;
+                -- Check if a new hit occurred or reset button is pressed
+                IF (hit_count > old_hit_count) OR (btnd = '1') THEN
+                    -- Move player back to the starting position
+                    player_x <= CONV_STD_LOGIC_VECTOR(75, 11);
+                    player_y <= CONV_STD_LOGIC_VECTOR(300, 11);
+        
+                    old_hit_count <= hit_count;
+                    
+                ELSE
+                    old_hit_count <= hit_count;
+        
+                    -- Normal movement logic
+                    new_x := CONV_INTEGER(player_x);
+                    new_y := CONV_INTEGER(player_y);
+        
+                    --  horizontal movement
+                    IF btnl = '1' AND count = 0 THEN
+                        new_x := new_x - 5;
+                    ELSIF btnr = '1' AND count = 0 THEN
+                        new_x := new_x + 5;
+                    END IF;
+        
+                    -- Ensure within horizontal screen bounds
+                    IF new_x < 20 THEN
+                        new_x := 20;
+                    ELSIF new_x > 780 THEN
+                        new_x := 780;
+                    END IF;
+        
+                    --  vertical movement
+                    IF btnu = '1' AND count = 0 THEN
+                        new_y := new_y - 5;
+                    ELSIF btn0 = '1' AND count = 0 THEN
+                        new_y := new_y + 5;
+                    END IF;
+        
+                    -- Ensure within vertical screen bounds
+                    IF new_y < 20 THEN
+                        new_y := 20;
+                    ELSIF new_y > 580 THEN
+                        new_y := 580;
+                    END IF;
+        
+                    -- Check for no overlap with first blocked area
+                    no_overlap_first := (new_x + player_w < blocked_left) OR
+                                        (new_x - player_w > blocked_right) OR
+                                        (new_y + player_h < blocked_top) OR
+                                        (new_y - player_h > blocked_bottom);
+        
+                    -- Check for no overlap with second blocked area
+                    no_overlap_second := (new_x + player_w < blocked_left1) OR
+                                         (new_x - player_w > blocked_right1) OR
+                                         (new_y + player_h < blocked_top1) OR
+                                         (new_y - player_h > blocked_bottom1);
+        
+                    -- Update position only if no overlap with BOTH areas
+                    IF no_overlap_first AND no_overlap_second THEN
+                        player_x <= CONV_STD_LOGIC_VECTOR(new_x, 11);
+                        player_y <= CONV_STD_LOGIC_VECTOR(new_y, 11);
+                    ELSE
+                        -- Overlap with at least one area, do not update position
+                    END IF;
+                END IF; 
+            END IF; 
+        END PROCESS;
+
 
     -- 7-segment multiplexing clock
     led_mpx <= count(19 DOWNTO 17);

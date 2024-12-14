@@ -357,7 +357,6 @@ BEGIN
             local_hit_count <= (OTHERS => '0'); -- Reset hit count
             hit_detected <= '0'; -- Reset hit detection flag
         END IF;
-        
         IF game_on = '0' THEN
             local_hit_count <= (OTHERS => '0'); -- Reset hit count
             hit_detected <= '0'; -- Reset hit detection flag
@@ -403,7 +402,6 @@ BEGIN
             ball_y_motionr3 <= (NOT ball_speed) + 1;
             ball_y_motionr4 <= (NOT ball_speed) + 1;
             ball_y_motionr5 <= (NOT ball_speed) + 1;
-            --game_on <= '0';
         ELSIF ball_x + bsize >= 800 THEN
             ball_x_motion <= (NOT ball_speed) + 1;
         ELSIF ball_x <= bsize THEN
@@ -453,7 +451,6 @@ BEGIN
         ELSIF ball_xr5 <= bsize THEN
             ball_x_motionr5 <= ball_speed;
         END IF;
-
 
         -- Bounce off bat and increment hit count
         IF (
