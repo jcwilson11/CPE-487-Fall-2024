@@ -23,6 +23,7 @@ Multiple balls were added to the screen, other than just 1 in the pong game. Eac
 #### Safe areas
 ![Portrait](PicsandVids/HomeBase1.png)
 ![Portrait](PicsandVids/HomeBase2.png)
+Defines constants and signals. left_home_x constant calculates the horizontal center of the left base as half the width. right_home_x positions the right base near the screen's far-right edge, calculated as 800 minus half the width. home_base_y (300), is the vertical center used by both bases. left_home_on and right_home_on displays the bases.
 Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the home base areas. Compares the current pixel's row and column to the rectangle boundaries. If the pixel is within the bounds, signals left_home_on, right_home_on are set to '1', otherwise to '0'.
    
 ### Conclusion
