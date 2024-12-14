@@ -44,6 +44,16 @@ ARCHITECTURE Behavioral OF pong IS
     CONSTANT blocked_right1  : INTEGER := 100;
     CONSTANT blocked_top1    : INTEGER := 0;
     CONSTANT blocked_bottom1 : INTEGER := 220;
+    --bottom right area
+    CONSTANT blocked_left2   : INTEGER := 700;
+    CONSTANT blocked_right2  : INTEGER := 800;
+    CONSTANT blocked_top2    : INTEGER := 380;
+    CONSTANT blocked_bottom2: INTEGER := 600;
+    --top right area
+    CONSTANT blocked_left3   : INTEGER := 700;
+    CONSTANT blocked_right3  : INTEGER := 800;
+    CONSTANT blocked_top3    : INTEGER := 0;
+    CONSTANT blocked_bottom3 : INTEGER := 220;
     
     CONSTANT player_w : INTEGER := 16; 
     CONSTANT player_h : INTEGER := 16;
@@ -99,7 +109,7 @@ BEGIN
         -- Clock process
         pos : PROCESS (clk_in)
             VARIABLE new_x, new_y : INTEGER;
-            VARIABLE no_overlap_first, no_overlap_second : BOOLEAN;
+            VARIABLE no_overlap, no_overlap1, no_overlap2, no_overlap3 : BOOLEAN;
         BEGIN
             IF rising_edge(clk_in) THEN
                 count <= count + 1;
@@ -148,19 +158,29 @@ BEGIN
                     END IF;
         
                     -- Check for no overlap with first blocked area
-                    no_overlap_first := (new_x + player_w < blocked_left) OR
+                    no_overlap := (new_x + player_w < blocked_left) OR
                                         (new_x - player_w > blocked_right) OR
                                         (new_y + player_h < blocked_top) OR
                                         (new_y - player_h > blocked_bottom);
         
                     -- Check for no overlap with second blocked area
-                    no_overlap_second := (new_x + player_w < blocked_left1) OR
+                    no_overlap1 := (new_x + player_w < blocked_left1) OR
                                          (new_x - player_w > blocked_right1) OR
                                          (new_y + player_h < blocked_top1) OR
                                          (new_y - player_h > blocked_bottom1);
+                                         
+                    no_overlap2 := (new_x + player_w < blocked_left2) OR
+                                        (new_x - player_w > blocked_right2) OR
+                                        (new_y + player_h < blocked_top2) OR
+                                        (new_y - player_h > blocked_bottom2);
+                                         
+                    no_overlap3 := (new_x + player_w < blocked_left3) OR
+                                        (new_x - player_w > blocked_right3) OR
+                                        (new_y + player_h < blocked_top3) OR
+                                        (new_y - player_h > blocked_bottom3);
         
                     -- Update position only if no overlap with BOTH areas
-                    IF no_overlap_first AND no_overlap_second THEN
+                    IF no_overlap AND no_overlap1 AND no_overlap2 AND no_overlap3 THEN
                         player_x <= CONV_STD_LOGIC_VECTOR(new_x, 11);
                         player_y <= CONV_STD_LOGIC_VECTOR(new_y, 11);
                     ELSE
