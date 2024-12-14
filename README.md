@@ -19,6 +19,11 @@ We used the Pong Lab 6 code as the starter code.
 #### Multiple balls
 ![Portrait](PicsandVids/MultipleBalls.png)
 Multiple balls were added to the screen, other than just 1 in the pong game. Each one was set to start halfway up the screen and was aligned 100 pixels apart. Then another 6 balls were added going in the opposite direction, also 100 pixels apart. A total of 12 balls were added, each ball alternates in its direction.
+
+#### Safe areas
+![Portrait](PicsandVids/HomeBase1.png)
+![Portrait](PicsandVids/HomeBase2.png)
+Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the home base areas. Compares the current pixel's row and column to the rectangle boundaries. If the pixel is within the bounds, signals left_home_on, right_home_on are set to '1', otherwise to '0'.
    
 ### Conclusion
 Started the project on Tuesday, and decided to make a version of "World's Hardest Game"; On Wednesday started the initial changing of existing components; By Thursday  we had all 12 balls on screen and everything was appearing as it should; Friday collision logic was finished... 
