@@ -13,7 +13,30 @@ We used the Pong Lab 6 code as the starter code.
 3. We added two safe zones on both sides of the screen, one to spawn in and the other to signify victory once the player has entered it. 
 4. We took away the x motion of the ball so that it continuously moves up and down. Then we proceeded to duplicate the balls so that there were 6 moving in the same direction.
 5. Then we added 6 more balls moving in opposite directions of the initial 6 balls
-6. We decided to keep to the speed logic from the switches as a way to change the difficulty of the game. 
+6. We decided to keep to the speed logic from the switches as a way to change the difficulty of the game.
+7. We added a stopwatch to keep track of how long the game has been playing for and it stops when the player wins
+
+
+### Inputs and Outputs
+#### bat_n_ball
+        player_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); - Represents the horizontal position of the player. Controlled by the buttons connected to the Nexys board.
+        player_y : IN STD_LOGIC_VECTOR (10 DOWNTO 0); - Represents the vertical position of the player. Controlled by the buttons connected to the Nexys board.
+        reset : IN STD_LOGIC; - Connected to a reset button on the Nexys board. Put the game to its default state by resetting the ball positions, clearing the hit_count, and stopping any active game motion.
+        hit_count : OUT STD_LOGIC_VECTOR(15 DOWNTO 0); - Keeps track of the failed attempts/collisions. Will be displayed on the annodes.
+        SW : IN STD_LOGIC_VECTOR (4 DOWNTO 0) - Maps directly to the switches on the board. allows for the adjustment of the speed of the balls during the game.
+#### pong
+        btnu : IN STD_LOGIC; - Represents the up button on the board. Moves the player up
+        btnd : IN STD_LOGIC; - The down button on the board. Serves as the reset so when its pressed it resets the game to its initial configuration
+        btn0 : IN STD_LOGIC; -  Moves the player down
+        SW : IN STD_LOGIC_VECTOR (4 DOWNTO 0) - Allows for the adjustment of the speed of the balls during the game.
+#### stopwatch
+        clk         : IN STD_LOGIC; - Primary clock signal; ensures the timing of all processes.      
+        reset       : IN STD_LOGIC; - Puts the stopwatch to the default state
+        one_sec_en  : IN STD_LOGIC; - Enable signal to increment its count once per second
+        pause       : IN STD_LOGIC; - freezing the current count on the stopwatch
+        display_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0) - output can be 0 to 9999, shows the current count of the stopwatch in BCD format
+
+        
 
 ### Modifications
 #### Multiple balls
@@ -38,7 +61,7 @@ If the stopwatch is running the one_sec_en signal is active ('1') and pause is i
 
    
 ### Conclusion
-Started the project on Tuesday, and decided to make a version of "World's Hardest Game"; On Wednesday started the initial changing of existing components; By Thursday  we had all 12 balls on screen and everything was appearing as it should; Friday collision logic was finished... 
+Started the project on Tuesday, and decided to make a version of "World's Hardest Game"; On Wednesday started the initial changing of existing components; By Thursday  we had all 12 balls on screen and everything was appearing as it should; Friday collision logic was finished. Saturday the timer was implemented.
 
 There was an issue trying to make both sets of balls bounce on the walls at the same time. Sometimes they would bounce at different times causing both sets of balls to move in the same direction which would cause the game to be unplayable. We initially tried changing the starting location, but after that didn't work we realized that the starting locations of the balls were constantly being overridden in the temp sections of the code. They were all initially 440 from the pong lab and we needed the balls to start at 300 for the purposes of our project... 
 
