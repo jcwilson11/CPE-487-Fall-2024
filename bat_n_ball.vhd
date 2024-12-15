@@ -8,8 +8,8 @@ ENTITY player_n_ball IS
         v_sync : IN STD_LOGIC;
         pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         pixel_col : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
-        player_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current bat x position
-        player_y : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current bat y position
+        player_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current player x position
+        player_y : IN STD_LOGIC_VECTOR (10 DOWNTO 0); -- current player y position
         reset : IN STD_LOGIC; -- initiates reset
         red : OUT STD_LOGIC;
         green : OUT STD_LOGIC;
@@ -17,16 +17,15 @@ ENTITY player_n_ball IS
         hit_count : OUT STD_LOGIC_VECTOR(15 DOWNTO 0); -- successful hits counter
         SW : IN STD_LOGIC_VECTOR (4 DOWNTO 0)
     
-           
     );
 END player_n_ball;
 
 ARCHITECTURE Behavioral OF player_n_ball IS
     CONSTANT bsize : INTEGER := 16; -- ball size in pixels
-    CONSTANT player_w : INTEGER := 16; -- bat width in pixels
-    CONSTANT player_h : INTEGER := 16; -- bat height in pixels
+    CONSTANT player_w : INTEGER := 16; -- player width in pixels
+    CONSTANT player_h : INTEGER := 16; -- player height in pixels
     SIGNAL ball_speed : STD_LOGIC_VECTOR (10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR (6, 11);
-    SIGNAL player_on : STD_LOGIC; -- indicates whether bat at over current pixel position
+    SIGNAL player_on : STD_LOGIC; -- indicates whether player at over current pixel position
     SIGNAL game_on : STD_LOGIC := '0'; -- indicates whether ball is in play
     --ball
     SIGNAL ball_x : STD_LOGIC_VECTOR(10 DOWNTO 0) := CONV_STD_LOGIC_VECTOR(120, 11);
@@ -94,13 +93,14 @@ ARCHITECTURE Behavioral OF player_n_ball IS
     SIGNAL hit_detected : STD_LOGIC := '0'; -- Tracks whether the bat-ball collision is active
 
     --home base size/position
-    CONSTANT home_base_width : INTEGER := 100;  -- New width of the square
-    CONSTANT home_base_height : INTEGER := 160; -- New height of the square
+    CONSTANT home_base_width : INTEGER := 100;  -- width of the square
+    CONSTANT home_base_height : INTEGER := 160; -- height of the square
     CONSTANT left_home_x : INTEGER := home_base_width / 2; -- Center of the left square
     CONSTANT right_home_x : INTEGER := 800 - (home_base_width / 2); -- Center of the right square
     CONSTANT home_base_y : INTEGER := 300; -- Vertical center for both squares
     SIGNAL left_home_on : STD_LOGIC; -- Signal for the left home base
     SIGNAL right_home_on : STD_LOGIC; -- Signal for the right home base
+    
 BEGIN
     --Process to draw home bases
     homedraw : PROCESS (pixel_row, pixel_col)
@@ -339,7 +339,6 @@ BEGIN
     -- Process to draw bat
     playerdraw : PROCESS (player_x, pixel_row, pixel_col) IS
     BEGIN
-        --define player as a 16 by 16 square
         IF (pixel_col >= player_x - player_w AND pixel_col <= player_x + player_w) AND
             (pixel_row >= player_y - player_h AND pixel_row <= player_y + player_h) THEN
             player_on <= '1';
