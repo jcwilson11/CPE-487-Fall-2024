@@ -18,13 +18,24 @@ We used the Pong Lab 6 code as the starter code.
 ### Modifications
 #### Multiple balls
 ![Portrait](PicsandVids/MultipleBalls.png)
-Multiple balls were added to the screen, other than just 1 in the pong game. Each one was set to start halfway up the screen and was aligned 100 pixels apart. Then another 6 balls were added going in the opposite direction, also 100 pixels apart. A total of 12 balls were added, each ball alternates in its direction.
+![Portrait](PicsandVids/bdraw.png)
+Multiple balls were added to the screen, other than just 1 in the pong game. Each one was set to start halfway up the screen and was aligned 100 pixels apart. Then another 6 balls were added going in the opposite direction, also 100 pixels apart. A total of 12 balls were added, each ball alternates in its direction. the bdraw process checks for the pixel in the bounds and displays the balls
 
 #### Safe areas
 ![Portrait](PicsandVids/HomeBase1.png)
 ![Portrait](PicsandVids/HomeBase2.png)
 Defines constants and signals. left_home_x constant calculates the horizontal center of the left base as half the width. right_home_x positions the right base near the screen's far-right edge, calculated as 800 minus half the width. home_base_y (300), is the vertical center used by both bases. left_home_on and right_home_on displays the bases.
 Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the home base areas. Compares the current pixel's row and column to the rectangle boundaries. If the pixel is within the bounds, signals left_home_on, right_home_on are set to '1', otherwise to '0'.
+
+##### Timer
+![Portrait](PicsandVids/stopwatch1.png)
+![Portrait](PicsandVids/stopwatch2.png)
+![Portrait](PicsandVids/stopwatch3.png)
+![Portrait](PicsandVids/stopwatch4.png)
+Defining a stopwatch module that counts up in seconds and outputs the time passed. The inputs are clk, reset, one_sec_en, and pause. The output display_out gives the current count in Binary-coded-decimal format.
+The architecture contains an integer signal count to store the current count, ranging from 0 to 9999, and a running signal to track whether the stopwatch is active. The to_bcd function converts the integer count into a 16-bit BCD format by extracting each decimal digit and assigning it to a 4-bit segment of the BCD vector. On every rising edge of the clock, If reset is high ('1'), the counter resets to zero, and the stopwatch starts running.
+If the stopwatch is running the one_sec_en signal is active ('1') and pause is inactive ('0'), the counter increments by 1. If the counter reaches 9999 it wraps back to zero. If pause is active the stopwatch does not increment. The current count is continuously converted to BCD format using the to_bcd function and assigned to the output signal display_out. Process one_sec_gen counts clock cycles using second_counter, resetting it to 0 and setting one_sec_en to '1' whenever the count reaches ONE_SEC_COUNT, which is one second. The my_stopwatch instance of the stopwatch entity connects to this generated one_sec_en signal to ensure the stopwatch increments only once per second. btnd acts as the reset input, and player_in_right_home acts as the pause signal, allowing the stopwatch to stop after winning the game.
+
    
 ### Conclusion
 Started the project on Tuesday, and decided to make a version of "World's Hardest Game"; On Wednesday started the initial changing of existing components; By Thursday  we had all 12 balls on screen and everything was appearing as it should; Friday collision logic was finished... 
