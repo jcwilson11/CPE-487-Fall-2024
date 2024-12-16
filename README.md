@@ -52,7 +52,9 @@ https://github.com/user-attachments/assets/37c69e4a-f1b2-4651-b5a3-8b9f8e63c7d5
 Defines constants and signals. left_home_x constant calculates the horizontal center of the left base as half the width. right_home_x positions the right base near the screen's far-right edge, calculated as 800 minus half the width. home_base_y (300), is the vertical center used by both bases. left_home_on and right_home_on displays the bases.
 Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the home base areas. Compares the current pixel's row and column to the rectangle boundaries. If the pixel is within the bounds, signals left_home_on, right_home_on are set to '1', otherwise to '0'.
 
-##### Timer
+https://github.com/user-attachments/assets/c55fcb5f-eee2-46a3-bdd8-87d57fd0113c
+
+##### Stopwatch
 ![Portrait](PicsandVids/stopwatch1.png)
 ![Portrait](PicsandVids/stopwatch2.png)
 ![Portrait](PicsandVids/stopwatch3.png)
