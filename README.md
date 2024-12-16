@@ -8,7 +8,7 @@ Inspiration for our game was taken from "World's Hardest Game" as shown below
 
 
 # Vivado and Nexys A7 Implementation
-## The most optimal and recommended speed is when the J15 and L16 switches are flipped when running
+## The most optimal and recommended speed is when the J15 and L16 switches are flipped when running. It also takes a few seconds for the balls to be perfectly synced.
 We used the Pong Lab 6 code as the starter code.
 1. We had to use a VGA connector to display our code on the screen. 
 2. We repurposed the bat to be a square rather than a rectangle and gave it x and y motion rather than just x motion
@@ -89,8 +89,7 @@ Started the project on Tuesday, and decided to make a version of "World's Hardes
 
 There was an issue trying to make both sets of balls bounce on the walls at the same time. Sometimes they would bounce at different times causing both sets of balls to move in the same direction which would cause the game to be unplayable. We initially tried changing the starting location, but after that didn't work we realized that the starting locations of the balls were constantly being overridden in the temp sections of the code. They were all initially 440 from the pong lab and we needed the balls to start at 300 for the purposes of our project. The collision detection works, but there are some instances where the ball visually touches the squares on the sides and the corners and it doesn't register.
 
-#### The most optimal and recommended speed is when the J15 and L16 switches are flipped when running. 
-#### It also takes a few seconds for them to be perfectly synced.
+#### The most optimal and recommended speed is when the J15 and L16 switches are flipped when running. It also takes a few seconds for the balls to be perfectly synced.
 
 John Shea - Wrote parts of the code, responsible for the GitHub README.md, worked on slides
 
