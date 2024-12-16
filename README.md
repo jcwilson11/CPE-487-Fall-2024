@@ -84,6 +84,12 @@ Demonstration:
 
 https://youtu.be/o3DLZq5Zxs8
    
+#### Constraints
+![Screenshot 2024-12-14 215106](https://github.com/user-attachments/assets/1bdb25d8-f4c1-44e6-b754-efa6f38d72fc)
+![Screenshot 2024-12-14 215031](https://github.com/user-attachments/assets/e0956dd1-0b8d-4d3d-abaa-7e7c4c2d9bf9)
+
+We started with the existing pong.xdc file we used for our lab 6 submission, which already included the references for all five switches (SW[0] to SW[4]) we were planning to use, as well as the btnl, btnr, and btn0 buttons on the board. We modifeid the constraint file to also reference the btnu and btnd buttons. After this change, we left btnl and btnr to control the player's movement in the x direction, reassigned btn0 to be the down button in the y direction, and assigned btnu to be the up button in the y direction. This layout was done in order to best mimic the arrow or WASD keys a player would use on a web browser when playing the game. The rest of the contents in the constraint files reminaed unchanged. 
+
 ### Conclusion
 Started the project on Tuesday, and decided to make a version of "World's Hardest Game"; On Wednesday started the initial changing of existing components; By Thursday  we had all 12 balls on screen and everything was appearing as it should; Friday collision logic was finished. Saturday the timer was implemented.
 
