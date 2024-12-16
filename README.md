@@ -4,6 +4,7 @@ This project uses a VGA connector to display a game with a user-controlled squar
 
 Inspiration for our game was taken from "World's Hardest Game" as shown below
 ![Portrait](PicsandVids/World'sHardestGame.png)
+![Portrait](PicsandVids/diagram2.png)
 
 
 ### Vivado and Nexys A7 Implementation
@@ -18,7 +19,7 @@ We used the Pong Lab 6 code as the starter code.
 
 
 ### Inputs and Outputs
-#### bat_n_ball
+#### player_n_ball
         player_x : IN STD_LOGIC_VECTOR (10 DOWNTO 0); - Represents the horizontal position of the player. Controlled by the buttons connected to the Nexys board.
         player_y : IN STD_LOGIC_VECTOR (10 DOWNTO 0); - Represents the vertical position of the player. Controlled by the buttons connected to the Nexys board.
         reset : IN STD_LOGIC; - Connected to a reset button on the Nexys board. Put the game to its default state by resetting the ball positions, clearing the hit_count, and stopping any active game motion.
@@ -92,19 +93,3 @@ Joris Wilson - Wrote parts of the code, Held onto the Nexys board and was respon
 Final Demo Demonstration:
 
 https://youtu.be/nG2WWNcUR1o
----------
-
-*A description of the expected behavior of the project, attachments needed (speaker module, VGA connector, etc.), related images/diagrams, etc. (10 points of the Submission category)
-high-level block diagram showing how different parts of your program connect together and/or showing how what you have created might fit into a more complete system could be appropriate instead.*
-
-*A summary of the steps to get the project to work in Vivado and on the Nexys board (5 points of the Submission category)*
-
-*Description of inputs from and outputs to the Nexys board from the Vivado project (10 points of the Submission category)
-As part of this category, if using starter code you should add at least one input and at least one output appropriate to your project to demonstrate your understanding of modifying the ports of your various architectures and components in VHDL as well as the separate .xdc constraints file.*
-
-*Images and/or videos of the project in action interspersed throughout to provide context (10 points of the Submission category)*
-
-*“Modifications” (15 points of the Submission category)
-If building on an existing lab describe your “modifications” – the changes made to that starter code to improve the code, create entirely new functionalities, etc.
-
-*Conclude with a summary of the process itself – who was responsible for what components, the timeline of work completed, any difficulties encountered and how they were solved, etc. (10 points of the Submission category)*
