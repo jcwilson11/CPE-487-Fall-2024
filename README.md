@@ -7,7 +7,8 @@ Inspiration for our game was taken from "World's Hardest Game" as shown below
 ![Portrait](PicsandVids/diagram2.png)
 
 
-### Vivado and Nexys A7 Implementation
+# Vivado and Nexys A7 Implementation
+## The most optimal and recommended speed is when the J15 and L16 switches are flipped when running
 We used the Pong Lab 6 code as the starter code.
 1. We had to use a VGA connector to display our code on the screen. 
 2. We repurposed the bat to be a square rather than a rectangle and gave it x and y motion rather than just x motion
@@ -53,6 +54,7 @@ https://github.com/user-attachments/assets/37c69e4a-f1b2-4651-b5a3-8b9f8e63c7d5
 ![Portrait](PicsandVids/PlayerMovement.png)
 Convert the player’s current position into integers, adjust it according to button inputs; Keep the player in bounds
 Check for overlaps with blocked areas by evaluating logical conditions; No overlaps -> update player position 
+The player's current position -> player_x and player_y. if the left button is pressed and the count condition equals zero, the player's horizontal position moves left. Same with the right. If new_x is less than 20 or greater than 780, and setting it to 20 or 780 keeps the player in bounds. Same check for if the player tries to go in any area that its not allowed to.
 
 
 #### Safe areas
@@ -68,6 +70,7 @@ https://github.com/user-attachments/assets/c55fcb5f-eee2-46a3-bdd8-87d57fd0113c
 #### Collision Detection
 ![Portrait](PicsandVids/CollisionDetection.png)
 Computes vx and vy to determine if a pixel is within the circular area of a ball; Series of conditional checks to detect if any ball overlaps with the player’s area
+The checks validate whether any part of the ball’s box intersects the player’s position. If at least one ball overlaps with the player the hit_detected flag is updated. A local hit count is incremented. If no overlap occurs, hit_detected is reset. Only one hit at a time.
 
 ##### Stopwatch
 ![Portrait](PicsandVids/stopwatch1.png)
@@ -84,7 +87,7 @@ https://youtu.be/o3DLZq5Zxs8
 ### Conclusion
 Started the project on Tuesday, and decided to make a version of "World's Hardest Game"; On Wednesday started the initial changing of existing components; By Thursday  we had all 12 balls on screen and everything was appearing as it should; Friday collision logic was finished. Saturday the timer was implemented.
 
-There was an issue trying to make both sets of balls bounce on the walls at the same time. Sometimes they would bounce at different times causing both sets of balls to move in the same direction which would cause the game to be unplayable. We initially tried changing the starting location, but after that didn't work we realized that the starting locations of the balls were constantly being overridden in the temp sections of the code. They were all initially 440 from the pong lab and we needed the balls to start at 300 for the purposes of our project... 
+There was an issue trying to make both sets of balls bounce on the walls at the same time. Sometimes they would bounce at different times causing both sets of balls to move in the same direction which would cause the game to be unplayable. We initially tried changing the starting location, but after that didn't work we realized that the starting locations of the balls were constantly being overridden in the temp sections of the code. They were all initially 440 from the pong lab and we needed the balls to start at 300 for the purposes of our project. The collision detection works, but there are some instances where the ball visually touches the squares on the sides and the corners and it doesn't register.
 
 John Shea - Wrote parts of the code, responsible for the GitHub README.md, worked on slides
 
