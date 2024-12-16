@@ -48,6 +48,12 @@ Demonstration:
 
 https://github.com/user-attachments/assets/37c69e4a-f1b2-4651-b5a3-8b9f8e63c7d5
 
+#### Player Movement
+![Portrait](PicsandVids/PlayerMovement.png)
+Convert the player’s current position into integers, adjust it according to button inputs; Keep the player in bounds
+Check for overlaps with blocked areas by evaluating logical conditions; No overlaps -> update player position 
+
+
 #### Safe areas
 ![Portrait](PicsandVids/HomeBase1.png)
 ![Portrait](PicsandVids/HomeBase2.png)
@@ -57,6 +63,10 @@ Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the 
 Demonstration:
 
 https://github.com/user-attachments/assets/c55fcb5f-eee2-46a3-bdd8-87d57fd0113c
+
+#### Collision Detection
+![Portrait](PicsandVids/CollisionDetection.png)
+Computes vx and vy to determine if a pixel is within the circular area of a ball; Series of conditional checks to detect if any ball overlaps with the player’s area
 
 ##### Stopwatch
 ![Portrait](PicsandVids/stopwatch1.png)
