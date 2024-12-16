@@ -44,6 +44,8 @@ We used the Pong Lab 6 code as the starter code.
 ![Portrait](PicsandVids/bdraw.png)
 Multiple balls were added to the screen, other than just 1 in the pong game. Each one was set to start halfway up the screen and was aligned 100 pixels apart. Then another 6 balls were added going in the opposite direction, also 100 pixels apart. A total of 12 balls were added, each ball alternates in its direction. the bdraw process checks for the pixel in the bounds and displays the balls
 
+https://github.com/user-attachments/assets/37c69e4a-f1b2-4651-b5a3-8b9f8e63c7d5
+
 #### Safe areas
 ![Portrait](PicsandVids/HomeBase1.png)
 ![Portrait](PicsandVids/HomeBase2.png)
