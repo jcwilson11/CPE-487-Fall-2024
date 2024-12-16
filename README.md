@@ -89,6 +89,9 @@ Started the project on Tuesday, and decided to make a version of "World's Hardes
 
 There was an issue trying to make both sets of balls bounce on the walls at the same time. Sometimes they would bounce at different times causing both sets of balls to move in the same direction which would cause the game to be unplayable. We initially tried changing the starting location, but after that didn't work we realized that the starting locations of the balls were constantly being overridden in the temp sections of the code. They were all initially 440 from the pong lab and we needed the balls to start at 300 for the purposes of our project. The collision detection works, but there are some instances where the ball visually touches the squares on the sides and the corners and it doesn't register.
 
+#### The most optimal and recommended speed is when the J15 and L16 switches are flipped when running. 
+#### It also takes a few seconds for them to be perfectly synced.
+
 John Shea - Wrote parts of the code, responsible for the GitHub README.md, worked on slides
 
 Joris Wilson - Wrote parts of the code, Held onto the Nexys board and was responsible for running the code, worked on slides
