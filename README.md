@@ -58,7 +58,7 @@ Check for overlaps with blocked areas by evaluating logical conditions; No overl
 ![Portrait](PicsandVids/HomeBase1.png)
 ![Portrait](PicsandVids/HomeBase2.png)
 Defines constants and signals. left_home_x constant calculates the horizontal center of the left base as half the width. right_home_x positions the right base near the screen's far-right edge, calculated as 800 minus half the width. home_base_y (300), is the vertical center used by both bases. left_home_on and right_home_on displays the bases.
-Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the home base areas. Compares the current pixel's row and column to the rectangle boundaries. If the pixel is within the bounds, signals left_home_on, right_home_on are set to '1', otherwise to '0'.
+Homedraw renders the safe base on the screen. Sees if a pixel overlaps with the home base areas. Compares the current pixel's row and column to the rectangle boundaries. If the pixel is within the bounds, signals left_home_on, right_home_on are set to 1, otherwise 0.
 
 Demonstration:
 
@@ -73,9 +73,8 @@ Computes vx and vy to determine if a pixel is within the circular area of a ball
 ![Portrait](PicsandVids/stopwatch2.png)
 ![Portrait](PicsandVids/stopwatch3.png)
 ![Portrait](PicsandVids/stopwatch4.png)
-Defining a stopwatch module that counts up in seconds and outputs the time passed. The inputs are clk, reset, one_sec_en, and pause. The output display_out gives the current count in Binary-coded-decimal format.
-The architecture contains an integer signal count to store the current count, ranging from 0 to 9999, and a running signal to track whether the stopwatch is active. The to_bcd function converts the integer count into a 16-bit BCD format by extracting each decimal digit and assigning it to a 4-bit segment of the BCD vector. On every rising edge of the clock, If reset is high ('1'), the counter resets to zero, and the stopwatch starts running.
-If the stopwatch is running the one_sec_en signal is active ('1') and pause is inactive ('0'), the counter increments by 1. If the counter reaches 9999 it wraps back to zero. If pause is active the stopwatch does not increment. The current count is continuously converted to BCD format using the to_bcd function and assigned to the output signal display_out. Process one_sec_gen counts clock cycles using second_counter, resetting it to 0 and setting one_sec_en to '1' whenever the count reaches ONE_SEC_COUNT, which is one second. The my_stopwatch instance of the stopwatch entity connects to this generated one_sec_en signal to ensure the stopwatch increments only once per second. btnd acts as the reset input, and player_in_right_home acts as the pause signal, allowing the stopwatch to stop after winning the game.
+
+Counts up in seconds and outputs the time passed. The output display_out gives the current count in Binary-coded-decimal format. The architecture contains an integer signal count to store the current count, ranging from 0 to 9999, and a running signal to track whether the stopwatch is active. The to_bcd function converts the integer count into a 16-bit BCD format by extracting each decimal digit and assigning it to a 4-bit segment of the BCD vector. On every rising edge of the clock, If reset is 1, the counter resets to zero, and the stopwatch starts running. If the stopwatch is running the one_sec_en signal is 1 and pause is 0, the counter increments by 1. If the counter reaches 9999 it wraps back to zero. If pause is active the stopwatch does not increment. The current count is continuously converted to BCD format using the to_bcd function and assigned to the output signal display_out. Process one_sec_gen counts clock cycles using second_counter, resetting it to 0 and setting one_sec_en to 1 whenever the count reaches ONE_SEC_COUNT, which is one second. The my_stopwatch instance of the stopwatch entity connects to this generated one_sec_en signal to ensure the stopwatch increments only once per second. btnd acts as the reset input, and player_in_right_home acts as the pause signal, allowing the stopwatch to stop after winning the game.
 
 Demonstration:
 
