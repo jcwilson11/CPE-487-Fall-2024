@@ -401,120 +401,24 @@ BEGIN
             ball_y_motionr3 <= (NOT ball_speed) + 1;
             ball_y_motionr4 <= (NOT ball_speed) + 1;
             ball_y_motionr5 <= (NOT ball_speed) + 1;
-        ELSIF ball_x + bsize >= 800 THEN
-            ball_x_motion <= (NOT ball_speed) + 1;
-        ELSIF ball_x <= bsize THEN
-            ball_x_motion <= ball_speed;
-        ELSIF ball_x1 + bsize >= 800 THEN
-            ball_x_motion1 <= (NOT ball_speed) + 1;
-        ELSIF ball_x1 <= bsize THEN
-            ball_x_motion1 <= ball_speed;
-        ELSIF ball_x2 + bsize >= 800 THEN
-            ball_x_motion2 <= (NOT ball_speed) + 1;
-        ELSIF ball_x2 <= bsize THEN
-            ball_x_motion2 <= ball_speed;
-        ELSIF ball_x3 + bsize >= 800 THEN
-            ball_x_motion3 <= (NOT ball_speed) + 1;
-        ELSIF ball_x3 <= bsize THEN
-            ball_x_motion3 <= ball_speed;
-        ELSIF ball_x4 + bsize >= 800 THEN
-            ball_x_motion4 <= (NOT ball_speed) + 1;
-        ELSIF ball_x4 <= bsize THEN
-            ball_x_motion4 <= ball_speed;
-        ELSIF ball_x5 + bsize >= 800 THEN
-            ball_x_motion5 <= (NOT ball_speed) + 1;
-        ELSIF ball_x5 <= bsize THEN
-            ball_x_motion5 <= ball_speed;
-        ELSIF ball_xr + bsize >= 800 THEN
-            ball_x_motionr <= (NOT ball_speed) + 1;
-        ELSIF ball_xr <= bsize THEN
-            ball_x_motionr <= ball_speed;
-        ELSIF ball_xr1 + bsize >= 800 THEN
-            ball_x_motionr1 <= (NOT ball_speed) + 1;
-        ELSIF ball_xr1 <= bsize THEN
-            ball_x_motionr1 <= ball_speed;
-        ELSIF ball_xr2 + bsize >= 800 THEN
-            ball_x_motionr2 <= (NOT ball_speed) + 1;
-        ELSIF ball_xr2 <= bsize THEN
-            ball_x_motionr2 <= ball_speed;
-        ELSIF ball_xr3 + bsize >= 800 THEN
-            ball_x_motionr3 <= (NOT ball_speed) + 1;
-        ELSIF ball_xr3 <= bsize THEN
-            ball_x_motionr3 <= ball_speed;
-        ELSIF ball_xr4 + bsize >= 800 THEN
-            ball_x_motionr4 <= (NOT ball_speed) + 1;
-        ELSIF ball_xr4 <= bsize THEN
-            ball_x_motionr4 <= ball_speed;
-        ELSIF ball_xr5 + bsize >= 800 THEN
-            ball_x_motionr5 <= (NOT ball_speed) + 1;
-        ELSIF ball_xr5 <= bsize THEN
-            ball_x_motionr5 <= ball_speed;
+        
         END IF;
 
         -- Bounce off bat and increment hit count
         IF (
-            (
-                (ball_x + bsize/2) >= (player_x - player_w) AND 
-                (ball_x - bsize/2) <= (player_x + player_w) AND
-                (ball_y + bsize/2) >= (player_y - player_h) AND
-                (ball_y - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_x1 + bsize/2) >= (player_x - player_w) AND 
-                (ball_x1 - bsize/2) <= (player_x + player_w) AND
-                (ball_y1 + bsize/2) >= (player_y - player_h) AND
-                (ball_y1 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_x2 + bsize/2) >= (player_x - player_w) AND 
-                (ball_x2 - bsize/2) <= (player_x + player_w) AND
-                (ball_y2 + bsize/2) >= (player_y - player_h) AND
-                (ball_y2 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_x3 + bsize/2) >= (player_x - player_w) AND 
-                (ball_x3 - bsize/2) <= (player_x + player_w) AND
-                (ball_y3 + bsize/2) >= (player_y - player_h) AND
-                (ball_y3 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_x4 + bsize/2) >= (player_x - player_w) AND 
-                (ball_x4 - bsize/2) <= (player_x + player_w) AND
-                (ball_y4 + bsize/2) >= (player_y - player_h) AND
-                (ball_y4 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_x5 + bsize/2) >= (player_x - player_w) AND 
-                (ball_x5 - bsize/2) <= (player_x + player_w) AND
-                (ball_y5 + bsize/2) >= (player_y - player_h) AND
-                (ball_y5 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_xr + bsize/2) >= (player_x - player_w) AND 
-                (ball_xr - bsize/2) <= (player_x + player_w) AND
-                (ball_yr + bsize/2) >= (player_y - player_h) AND
-                (ball_yr - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_xr1 + bsize/2) >= (player_x - player_w) AND 
-                (ball_xr1 - bsize/2) <= (player_x + player_w) AND
-                (ball_yr1 + bsize/2) >= (player_y - player_h) AND
-                (ball_yr1 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_xr2 + bsize/2) >= (player_x - player_w) AND 
-                (ball_xr2 - bsize/2) <= (player_x + player_w) AND
-                (ball_yr2 + bsize/2) >= (player_y - player_h) AND
-                (ball_yr2 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_xr3 + bsize/2) >= (player_x - player_w) AND 
-                (ball_xr3 - bsize/2) <= (player_x + player_w) AND
-                (ball_yr3 + bsize/2) >= (player_y - player_h) AND
-                (ball_yr3 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_xr4 + bsize/2) >= (player_x - player_w) AND 
-                (ball_xr4 - bsize/2) <= (player_x + player_w) AND
-                (ball_yr4 + bsize/2) >= (player_y - player_h) AND
-                (ball_yr4 - bsize/2) <= (player_y + player_h)
-            ) OR (
-                (ball_xr5 + bsize/2) >= (player_x - player_w) AND 
-                (ball_xr5 - bsize/2) <= (player_x + player_w) AND
-                (ball_yr5 + bsize/2) >= (player_y - player_h) AND
-                (ball_yr5 - bsize/2) <= (player_y + player_h)
-            )
-        ) THEN
+            (ball_x + bsize/2 >= player_x - player_w AND ball_x - bsize/2 <= player_x + player_w AND ball_y + bsize/2 >= player_y - player_h AND ball_y - bsize/2 <= player_y + player_h)
+            OR (ball_x1 + bsize/2 >= player_x - player_w AND ball_x1 - bsize/2 <= player_x + player_w AND ball_y1 + bsize/2 >= player_y - player_h AND ball_y1 - bsize/2 <= player_y + player_h)
+            OR (ball_x2 + bsize/2 >= player_x - player_w AND ball_x2 - bsize/2 <= player_x + player_w AND ball_y2 + bsize/2 >= player_y - player_h AND ball_y2 - bsize/2 <= player_y + player_h)
+            OR (ball_x3 + bsize/2 >= player_x - player_w AND ball_x3 - bsize/2 <= player_x + player_w AND ball_y3 + bsize/2 >= player_y - player_h AND ball_y3 - bsize/2 <= player_y + player_h)
+            OR (ball_x4 + bsize/2 >= player_x - player_w AND ball_x4 - bsize/2 <= player_x + player_w AND ball_y4 + bsize/2 >= player_y - player_h AND ball_y4 - bsize/2 <= player_y + player_h)
+            OR (ball_x5 + bsize/2 >= player_x - player_w AND ball_x5 - bsize/2 <= player_x + player_w AND ball_y5 + bsize/2 >= player_y - player_h AND ball_y5 - bsize/2 <= player_y + player_h)
+            OR (ball_xr + bsize/2 >= player_x - player_w AND ball_xr - bsize/2 <= player_x + player_w AND ball_yr + bsize/2 >= player_y - player_h AND ball_yr - bsize/2 <= player_y + player_h)
+            OR (ball_xr1 + bsize/2 >= player_x - player_w AND ball_xr1 - bsize/2 <= player_x + player_w AND ball_yr1 + bsize/2 >= player_y - player_h AND ball_yr1 - bsize/2 <= player_y + player_h)
+            OR (ball_xr2 + bsize/2 >= player_x - player_w AND ball_xr2 - bsize/2 <= player_x + player_w AND ball_yr2 + bsize/2 >= player_y - player_h AND ball_yr2 - bsize/2 <= player_y + player_h)
+            OR (ball_xr3 + bsize/2 >= player_x - player_w AND ball_xr3 - bsize/2 <= player_x + player_w AND ball_yr3 + bsize/2 >= player_y - player_h AND ball_yr3 - bsize/2 <= player_y + player_h)
+            OR (ball_xr4 + bsize/2 >= player_x - player_w AND ball_xr4 - bsize/2 <= player_x + player_w AND ball_yr4 + bsize/2 >= player_y - player_h AND ball_yr4 - bsize/2 <= player_y + player_h)
+            OR (ball_xr5 + bsize/2 >= player_x - player_w AND ball_xr5 - bsize/2 <= player_x + player_w AND ball_yr5 + bsize/2 >= player_y - player_h AND ball_yr5 - bsize/2 <= player_y + player_h)
+        ) THEN 
             -- At least one ball collided with the player
             IF hit_detected = '0' THEN
                 local_hit_count <= local_hit_count + 1; -- Increment once per collision event
@@ -534,13 +438,6 @@ BEGIN
         ELSE
             ball_y <= temp(10 DOWNTO 0);
         END IF;
-
-        temp := ('0' & ball_x) + (ball_x_motion(10) & ball_x_motion);
-        IF temp(11) = '1' THEN
-            ball_x <= (OTHERS => '0');
-        ELSE
-            ball_x <= temp(10 DOWNTO 0);
-        END IF;
         
         -- Update ball position: 2nd ball
         temp1 := ('0' & ball_y1) + (ball_y_motion1(10) & ball_y_motion1);
@@ -551,13 +448,6 @@ BEGIN
             ball_y1 <= (OTHERS => '0');
         ELSE
             ball_y1 <= temp1(10 DOWNTO 0);
-        END IF;
-
-        temp1 := ('0' & ball_x1) + (ball_x_motion1(10) & ball_x_motion1);
-        IF temp1(11) = '1' THEN
-            ball_x1 <= (OTHERS => '0');
-        ELSE
-            ball_x1 <= temp1(10 DOWNTO 0);
         END IF;
         
         -- Update ball position: 3rd ball
@@ -571,13 +461,6 @@ BEGIN
             ball_y2 <= temp2(10 DOWNTO 0);
         END IF;
 
-        temp2 := ('0' & ball_x2) + (ball_x_motion2(10) & ball_x_motion2);
-        IF temp2(11) = '1' THEN
-            ball_x2 <= (OTHERS => '0');
-        ELSE
-            ball_x2 <= temp2(10 DOWNTO 0);
-        END IF;
-
         -- Update ball position: 4th ball
         temp3 := ('0' & ball_y3) + (ball_y_motion3(10) & ball_y_motion3);
         IF game_on = '0' THEN
@@ -589,12 +472,6 @@ BEGIN
             ball_y3 <= temp3(10 DOWNTO 0);
         END IF;
 
-        temp3 := ('0' & ball_x3) + (ball_x_motion3(10) & ball_x_motion3);
-        IF temp3(11) = '1' THEN
-            ball_x3 <= (OTHERS => '0');
-        ELSE
-            ball_x3 <= temp3(10 DOWNTO 0);
-        END IF;
         -- Update ball position: 4th ball
         temp4 := ('0' & ball_y4) + (ball_y_motion4(10) & ball_y_motion4);
         IF game_on = '0' THEN
@@ -606,12 +483,6 @@ BEGIN
             ball_y4 <= temp4(10 DOWNTO 0);
         END IF;
 
-        temp4 := ('0' & ball_x4) + (ball_x_motion4(10) & ball_x_motion4);
-        IF temp4(11) = '1' THEN
-            ball_x4 <= (OTHERS => '0');
-        ELSE
-            ball_x4 <= temp4(10 DOWNTO 0);
-        END IF;
         -- Update ball position: 4th ball
         temp5 := ('0' & ball_y5) + (ball_y_motion5(10) & ball_y_motion5);
         IF game_on = '0' THEN
@@ -621,13 +492,6 @@ BEGIN
             ball_y5 <= (OTHERS => '0');
         ELSE
             ball_y5 <= temp5(10 DOWNTO 0);
-        END IF;
-
-        temp5 := ('0' & ball_x5) + (ball_x_motion5(10) & ball_x_motion5);
-        IF temp5(11) = '1' THEN
-            ball_x5 <= (OTHERS => '0');
-        ELSE
-            ball_x5 <= temp5(10 DOWNTO 0);
         END IF;
         
         -- Update ball position: 1st ball
@@ -639,13 +503,6 @@ BEGIN
             ball_yr <= (OTHERS => '0');
         ELSE
             ball_yr <= tempr(10 DOWNTO 0);
-        END IF;
-
-        tempr := ('0' & ball_xr) + (ball_x_motionr(10) & ball_x_motionr);
-        IF tempr(11) = '1' THEN
-            ball_xr <= (OTHERS => '0');
-        ELSE
-            ball_xr <= tempr(10 DOWNTO 0);
         END IF;
         
         -- Update ball position: 2nd ball
@@ -659,13 +516,6 @@ BEGIN
             ball_yr1 <= tempr1(10 DOWNTO 0);
         END IF;
 
-        tempr1 := ('0' & ball_xr1) + (ball_x_motionr1(10) & ball_x_motionr1);
-        IF tempr1(11) = '1' THEN
-            ball_xr1 <= (OTHERS => '0');
-        ELSE
-            ball_xr1 <= tempr1(10 DOWNTO 0);
-        END IF;
-        
         -- Update ball position: 3rd ball
         tempr2 := ('0' & ball_yr2) + (ball_y_motionr2(10) & ball_y_motionr2);
         IF game_on = '0' THEN
@@ -675,13 +525,6 @@ BEGIN
             ball_yr2 <= (OTHERS => '0');
         ELSE
             ball_yr2 <= tempr2(10 DOWNTO 0);
-        END IF;
-
-        tempr2 := ('0' & ball_xr2) + (ball_x_motionr2(10) & ball_x_motionr2);
-        IF tempr2(11) = '1' THEN
-            ball_xr2 <= (OTHERS => '0');
-        ELSE
-            ball_xr2 <= tempr2(10 DOWNTO 0);
         END IF;
 
         -- Update ball position: 4th ball
@@ -695,12 +538,6 @@ BEGIN
             ball_yr3 <= tempr3(10 DOWNTO 0);
         END IF;
 
-        tempr3 := ('0' & ball_xr3) + (ball_x_motionr3(10) & ball_x_motionr3);
-        IF tempr3(11) = '1' THEN
-            ball_xr3 <= (OTHERS => '0');
-        ELSE
-            ball_xr3 <= tempr3(10 DOWNTO 0);
-        END IF;
         -- Update ball position: 4th ball
         tempr4 := ('0' & ball_yr4) + (ball_y_motionr4(10) & ball_y_motionr4);
         IF game_on = '0' THEN
@@ -712,12 +549,6 @@ BEGIN
             ball_yr4 <= tempr4(10 DOWNTO 0);
         END IF;
 
-        tempr4 := ('0' & ball_xr4) + (ball_x_motionr4(10) & ball_x_motionr4);
-        IF tempr4(11) = '1' THEN
-            ball_xr4 <= (OTHERS => '0');
-        ELSE
-            ball_xr4 <= tempr4(10 DOWNTO 0);
-        END IF;
         -- Update ball position: 4th ball
         tempr5 := ('0' & ball_yr5) + (ball_y_motionr5(10) & ball_y_motionr5);
         IF game_on = '0' THEN
@@ -729,12 +560,7 @@ BEGIN
             ball_yr5 <= tempr5(10 DOWNTO 0);
         END IF;
 
-        tempr5 := ('0' & ball_xr5) + (ball_x_motionr5(10) & ball_x_motionr5);
-        IF tempr5(11) = '1' THEN
-            ball_xr5 <= (OTHERS => '0');
-        ELSE
-            ball_xr5 <= tempr5(10 DOWNTO 0);
-        END IF;
+
         
     END PROCESS;
 
