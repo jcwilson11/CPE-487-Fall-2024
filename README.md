@@ -4,7 +4,7 @@ This GitHub covers content taken from my Digital Systems Design (dsd). All origi
 
 GitHub: https://github.com/byett/dsd.git
 
-There are a total of three simulation assignmernts, six labs, and a final project. 
+There are a total of three simulation assignmernts, six labs, and a final project. All three simulation assignments were done independtly, while all the labs and the finak project were completed with my friend and lab partner, John Shea: https://github.com/Jshea1
 
 # NI Digilent Nexys A7-100T FPGA Trainer Board
 
